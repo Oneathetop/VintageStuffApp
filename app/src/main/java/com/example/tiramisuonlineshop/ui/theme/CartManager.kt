@@ -1,7 +1,7 @@
 package com.example.tiramisuonlineshop.ui.theme
 
 import androidx.compose.runtime.mutableStateListOf
-import com.example.tiramisuonlineshop.ui.Product
+import com.example.tiramisuonlineshop.model.Product
 
 object CartManager {
     val cartItems = mutableStateListOf<Product>()

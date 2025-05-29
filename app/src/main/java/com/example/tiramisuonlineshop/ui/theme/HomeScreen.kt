@@ -26,13 +26,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.example.tiramisuonlineshop.model.Product
 
-data class Product(
-    val id: String,
-    val name: String,
-    val imageResId: Int,
-    val price: String
-)
 
 val sampleProducts = listOf(
     Product("1", "Pokemon Card Collection", com.example.tiramisuonlineshop.R.drawable.pokemon_cards,"$50"),
