@@ -1,5 +1,6 @@
 package com.example.tiramisuonlineshop.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Arrangement
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartScreen(navController: NavHostController) {

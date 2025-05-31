@@ -1,4 +1,4 @@
-package com.example.tiramisuonlineshop.ui.theme
+package com.example.tiramisuonlineshop.ui.theme.screens
 
 
 import androidx.compose.foundation.layout.*
@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
-
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun RegisterScreen(navController: NavHostController) {
+    var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -23,13 +23,25 @@ fun LoginScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalArrangement = Arrangement.Center
     ) {
 
-        Text("Login", style = MaterialTheme.typography.headlineMedium)
+        Text(
+            "Register",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = name,
+            onValueChange = { name = it },
+            label = { Text("Full Name") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
             value = email,
@@ -50,14 +62,10 @@ fun LoginScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { navController.navigate("home") },
+            onClick = { navController.popBackStack() },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Login")
-        }
-
-        TextButton(onClick = { navController.navigate("register") }) {
-            Text("No account? Register")
+            Text("Submit")
         }
     }
 }

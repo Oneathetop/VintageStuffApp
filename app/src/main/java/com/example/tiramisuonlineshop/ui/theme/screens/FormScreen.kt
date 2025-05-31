@@ -1,4 +1,4 @@
-package com.example.tiramisuonlineshop.ui.theme
+package com.example.tiramisuonlineshop.ui.theme.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 
 
 @OptIn(ExperimentalMaterial3Api::class)

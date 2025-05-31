@@ -1,4 +1,4 @@
-package com.example.tiramisuonlineshop.ui.theme
+package com.example.tiramisuonlineshop.ui.theme.screens
 
 
 import androidx.compose.foundation.layout.*
@@ -12,11 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.compose.ui.Alignment.Horizontal
+
 
 @Composable
-fun RegisterScreen(navController: NavHostController) {
-    var name by remember { mutableStateOf("") }
+fun LoginScreen(navController: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -24,25 +23,13 @@ fun RegisterScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(
-            "Register",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+        Text("Login", style = MaterialTheme.typography.headlineMedium)
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Full Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
             value = email,
@@ -63,10 +50,14 @@ fun RegisterScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { navController.popBackStack() },
+            onClick = { navController.navigate("home") },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Submit")
+            Text("Login")
+        }
+
+        TextButton(onClick = { navController.navigate("register") }) {
+            Text("No account? Register")
         }
     }
 }

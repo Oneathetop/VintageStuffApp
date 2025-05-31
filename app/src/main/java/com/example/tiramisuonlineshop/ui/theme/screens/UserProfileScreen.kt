@@ -1,4 +1,4 @@
-package com.example.tiramisuonlineshop.ui.theme
+package com.example.tiramisuonlineshop.ui.theme.screens
 
 import android.content.res.Configuration
 import android.net.Uri
@@ -6,7 +6,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,7 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -30,6 +28,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.text.input.KeyboardType
+import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -116,7 +116,7 @@ fun UserProfileScreen(navController: NavHostController) {
                 onValueChange = { phoneNumber = it },
                 label = { Text("Phone Number") },
                 modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = androidx.compose.ui.text.input.KeyboardType.Phone)
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone)
             )
 
             Spacer(modifier = Modifier.height(fieldSpacing))
@@ -126,7 +126,7 @@ fun UserProfileScreen(navController: NavHostController) {
                 onValueChange = { address = it },
                 label = { Text("Shipping Address") },
                 modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = androidx.compose.ui.text.input.KeyboardType.Text)
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
             )
 
             Spacer(modifier = Modifier.height(fieldSpacing))

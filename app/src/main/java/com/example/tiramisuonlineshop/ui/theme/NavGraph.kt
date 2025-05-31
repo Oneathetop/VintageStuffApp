@@ -5,14 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.tiramisuonlineshop.ui.CartScreen
-import com.example.tiramisuonlineshop.ui.theme.LoginScreen
-import com.example.tiramisuonlineshop.ui.theme.RegisterScreen
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.ui.res.painterResource
-import com.example.tiramisuonlineshop.ui.theme.SplashScreen
-import com.example.tiramisuonlineshop.ui.theme.UserProfileScreen
+import com.example.tiramisuonlineshop.ui.theme.screens.LoginScreen
+import com.example.tiramisuonlineshop.ui.theme.screens.RegisterScreen
+import com.example.tiramisuonlineshop.ui.theme.screens.SplashScreen
+import com.example.tiramisuonlineshop.ui.theme.screens.UserProfileScreen
 
 
 @Composable
