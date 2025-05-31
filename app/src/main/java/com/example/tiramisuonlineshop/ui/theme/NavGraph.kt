@@ -11,6 +11,7 @@ import com.example.tiramisuonlineshop.ui.theme.screens.SplashScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.UserProfileScreen
 
 
+
 @Composable
 fun AppNavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = "splash") {
@@ -23,14 +24,10 @@ fun AppNavGraph(navController: NavHostController) {
         }
         composable("cart") { CartScreen(navController) }
         composable("profile") { UserProfileScreen(navController) }
-        composable("splash") {
-            SplashScreen {
-                navController.navigate("login") {
-                    popUpTo("splash") { inclusive = true }
-                }
+        composable("splash") { SplashScreen(navController)}
             }
         }
-    }
-}
+
+
 
 

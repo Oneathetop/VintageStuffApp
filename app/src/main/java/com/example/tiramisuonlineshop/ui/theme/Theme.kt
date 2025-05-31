@@ -279,25 +279,21 @@ private val customLightScheme = lightColorScheme(
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
-    content: @Composable() () -> Unit
+    darkTheme: Boolean = ThemeManager.isDarkMode.value, // use your toggle state
+    content: @Composable () -> Unit
 ) {
-  val colorScheme = when {
-      dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-          val context = LocalContext.current
-          if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-      }
-      
-      darkTheme -> darkScheme
-      else -> customLightScheme
-  }
+    val colorScheme = if (darkTheme) {
+        // You can either define your own dark scheme or use default dark scheme
+        darkColorScheme()
+    } else {
+        lightScheme // your exported cream theme
+    }
 
-  MaterialTheme(
-    colorScheme = colorScheme,
-    typography = AppTypography,
-    content = content
-  )
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = AppTypography,
+        content = content
+    )
 }
+
 

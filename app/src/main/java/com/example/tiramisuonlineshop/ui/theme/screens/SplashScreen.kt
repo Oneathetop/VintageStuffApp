@@ -1,36 +1,49 @@
 package com.example.tiramisuonlineshop.ui.theme.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.tiramisuonlineshop.R
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
+import com.example.tiramisuonlineshop.R
 
 @Composable
-fun SplashScreen(onTimeout: () -> Unit) {
-    // Use LaunchedEffect to wait some time (e.g. 2 seconds) then call onTimeout
+fun SplashScreen(navController: NavHostController) {
     LaunchedEffect(Unit) {
-        delay(2000) // 2 seconds delay
-        onTimeout()
+        delay(3500)
+        navController.navigate("login") {
+            popUpTo("splash") { inclusive = true }
+        }
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFFFF8F0)) // Cream base
     ) {
-        // Replace with your app logo image resource or composable
-        // Example using an image resource:
-        Image(
-            painter = painterResource(id = R.drawable.app_logo),
-            contentDescription = "App Logo",
-            modifier = Modifier.size(300.dp)
-        )
+        // No animated gradient circles
+
+        // Logo (static, fully visible)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(32.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.app_logo),
+                contentDescription = "App Logo",
+                modifier = Modifier.size(300.dp)
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+        }
     }
 }
