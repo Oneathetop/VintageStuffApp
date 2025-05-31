@@ -255,6 +255,28 @@ val unspecified_scheme = ColorFamily(
     Color.Unspecified, Color.Unspecified, Color.Unspecified, Color.Unspecified
 )
 
+
+private val customLightScheme = lightColorScheme(
+    primary = Color(0xFF8B5E3C),              // Soft brown
+    onPrimary = Color.White,
+    primaryContainer = Color(0xFFEEDDC8),     // Cream container
+    onPrimaryContainer = Color(0xFF4A2C14),
+
+    secondary = Color(0xFFD7B49E),            // Muted peach
+    onSecondary = Color(0xFF3E2F25),
+    secondaryContainer = Color(0xFFFFE8D0),
+    onSecondaryContainer = Color(0xFF3E2F25),
+
+    background = Color(0xFFFFFAF0),           // Vintage cream
+    onBackground = Color(0xFF3B2F2A),
+
+    surface = Color(0xFFFFFBF5),              // Light cream
+    onSurface = Color(0xFF3B2F2A),
+
+    error = Color(0xFFB00020),
+    onError = Color.White
+)
+
 @Composable
 fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -269,7 +291,7 @@ fun AppTheme(
       }
       
       darkTheme -> darkScheme
-      else -> lightScheme
+      else -> customLightScheme
   }
 
   MaterialTheme(
