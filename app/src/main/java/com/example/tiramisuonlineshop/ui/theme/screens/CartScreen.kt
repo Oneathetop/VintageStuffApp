@@ -37,78 +37,70 @@ fun CartScreen(navController: NavHostController) {
             if (CartManager.cartItems.isEmpty()) {
                 Text("Your cart is empty!", style = MaterialTheme.typography.headlineSmall)
             } else {
-                BoxWithConstraints(modifier = Modifier.weight(1f)) {
+
+                //
+                BoxWithConstraints(
+                    modifier = Modifier.weight(1f)
+                ) {
                     val isWide = maxWidth > 600.dp
                     val columns = if (isWide) 2 else 1
                     val totalPrice = CartManager.cartItems.sumOf { it.product.price * it.quantity }
 
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(columns),
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        contentPadding = PaddingValues(bottom = 8.dp)
-
-                    ) {
-                        items(CartManager.cartItems) { item ->
-                            Card(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(8.dp)
-                            )
-
-                            {
-
-                                Column(modifier = Modifier.padding(16.dp)) {
-                                    Text(
-                                        text = "${item.product.name} x${item.quantity}",
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
-                                    Spacer(modifier = Modifier.height(4.dp))
-                                    Text(
-                                        text = "Price: ${item.product.price}",
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
-
-
-                                    Spacer(modifier = Modifier.height(4.dp))
-
-                                    val priceValue = item.product.price
-
-                                    Spacer(modifier = Modifier.height(4.dp))
-
-                                    Text(
-                                        text = "Total: $${priceValue * item.quantity}",
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(vertical = 8.dp)
-                                    )
-                                    Spacer(modifier = Modifier.height(16.dp))
-
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(columns),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),  // Take all available vertical space
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            contentPadding = PaddingValues(bottom = 8.dp)
+                        ) {
+                            items(CartManager.cartItems) { item ->
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp)
+                                ) {
+                                    Column(modifier = Modifier.padding(16.dp)) {
+                                        Text(
+                                            text = "${item.product.name} x${item.quantity}",
+                                            style = MaterialTheme.typography.titleMedium
+                                        )
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Text(
+                                            text = "Price: $${item.product.price}",
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = MaterialTheme.colorScheme.primary
+                                        )
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Text(
+                                            text = "Total: $${item.product.price * item.quantity}",
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurface,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 8.dp)
+                                        )
+                                    }
                                 }
                             }
                         }
 
+                        Spacer(modifier = Modifier.height(16.dp))  // Space between grid and total text
+
+                        Text(
+                            text = "Total: $${"%.2f".format(totalPrice.toDouble())}",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.fillMaxWidth()
+                        )
                     }
-
-
-
-                    Text(
-                        text = "Total: $${"%.2f".format(totalPrice.toDouble())}",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp)
-                    )
-
-
-
-
                 }
+
+                //
+                }
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -121,4 +113,4 @@ fun CartScreen(navController: NavHostController) {
             }
         }
     }
-}
+
