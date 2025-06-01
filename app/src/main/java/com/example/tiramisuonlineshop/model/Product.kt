@@ -6,3 +6,4 @@ data class Product(
     val imageResId: Int,
     val price: String
 )
+

@@ -47,8 +47,9 @@ fun CartScreen(navController: NavHostController) {
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                         contentPadding = PaddingValues(bottom = 8.dp)
+
                     ) {
-                        items(CartManager.cartItems) { product ->
+                        items(CartManager.cartItems) { item ->
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -56,18 +57,27 @@ fun CartScreen(navController: NavHostController) {
                             ) {
                                 Column(modifier = Modifier.padding(16.dp)) {
                                     Text(
-                                        text = product.name,
+                                        text = "${item.product.name} x${item.quantity}",
                                         style = MaterialTheme.typography.titleMedium
                                     )
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Text(
-                                        text = "Price: ${product.price}",
+                                        text = "Price: ${item.product.price}",
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = MaterialTheme.colorScheme.primary
+                                    )
+
+                                    val priceValue = item.product.price.removePrefix("$").toDoubleOrNull() ?: 0.0
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Text(
+                                        text = "Total: $${priceValue * item.quantity}",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurface
                                     )
                                 }
                             }
                         }
+
                     }
                 }
 
