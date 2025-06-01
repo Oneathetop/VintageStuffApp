@@ -40,6 +40,7 @@ fun CartScreen(navController: NavHostController) {
                 BoxWithConstraints(modifier = Modifier.weight(1f)) {
                     val isWide = maxWidth > 600.dp
                     val columns = if (isWide) 2 else 1
+                    val totalPrice = CartManager.cartItems.sumOf { it.product.price * it.quantity }
 
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(columns),
@@ -54,7 +55,10 @@ fun CartScreen(navController: NavHostController) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(8.dp)
-                            ) {
+                            )
+
+                            {
+
                                 Column(modifier = Modifier.padding(16.dp)) {
                                     Text(
                                         text = "${item.product.name} x${item.quantity}",
@@ -67,18 +71,43 @@ fun CartScreen(navController: NavHostController) {
                                         color = MaterialTheme.colorScheme.primary
                                     )
 
-                                    val priceValue = item.product.price.removePrefix("$").toDoubleOrNull() ?: 0.0
+
                                     Spacer(modifier = Modifier.height(4.dp))
+
+                                    val priceValue = item.product.price
+
+                                    Spacer(modifier = Modifier.height(4.dp))
+
                                     Text(
                                         text = "Total: $${priceValue * item.quantity}",
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurface
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(vertical = 8.dp)
                                     )
+                                    Spacer(modifier = Modifier.height(16.dp))
+
                                 }
                             }
                         }
 
                     }
+
+
+
+                    Text(
+                        text = "Total: $${"%.2f".format(totalPrice.toDouble())}",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    )
+
+
+
+
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))

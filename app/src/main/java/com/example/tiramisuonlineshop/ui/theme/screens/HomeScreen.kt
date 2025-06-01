@@ -30,10 +30,10 @@ import com.example.tiramisuonlineshop.model.Product
 
 
 val sampleProducts = listOf(
-    Product("1", "Pokemon Card Collection", com.example.tiramisuonlineshop.R.drawable.pokemon_cards,"$50"),
-    Product("2", "Retro Watch", com.example.tiramisuonlineshop.R.drawable.smartwatch,"$80"),
-    Product("3", "Vintage Camera", com.example.tiramisuonlineshop.R.drawable.retro_camera,"$100"),
-    Product("4", "Game boy", com.example.tiramisuonlineshop.R.drawable.gameboy,"$70")
+    Product("1", "Pokemon Card Collection", com.example.tiramisuonlineshop.R.drawable.pokemon_cards,50),
+    Product("2", "Retro Watch", com.example.tiramisuonlineshop.R.drawable.smartwatch,80),
+    Product("3", "Vintage Camera", com.example.tiramisuonlineshop.R.drawable.retro_camera,100),
+    Product("4", "Game boy", com.example.tiramisuonlineshop.R.drawable.gameboy,70)
 )
 
 @Composable
