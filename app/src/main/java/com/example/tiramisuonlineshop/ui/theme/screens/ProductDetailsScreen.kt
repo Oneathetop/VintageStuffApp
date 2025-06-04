@@ -105,8 +105,6 @@ fun ProductDetailsScreen(productId: String, navController: NavHostController) {
                         Icon(Icons.Default.Add, contentDescription = "Increase")
                     }
                 }
-
-                //
                 Button(
                     onClick = {
                         CartManager.addToCart(product,quantity)
@@ -117,8 +115,6 @@ fun ProductDetailsScreen(productId: String, navController: NavHostController) {
                     Text("Add to Cart")
                 }
             }
-
-            //
         } else {
             Text("Product not found", modifier = Modifier.padding(16.dp))
         }
