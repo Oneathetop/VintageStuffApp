@@ -51,7 +51,7 @@ fun CartScreen(navController: NavHostController) {
                             columns = GridCells.Fixed(columns),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .weight(1f),  // Take all available vertical space
+                                .weight(1f),  
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             contentPadding = PaddingValues(bottom = 8.dp)
@@ -87,8 +87,7 @@ fun CartScreen(navController: NavHostController) {
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(16.dp))  // Space between grid and total text
-
+                        Spacer(modifier = Modifier.height(16.dp))  
                         Text(
                             text = "Total: $${"%.2f".format(totalPrice.toDouble())}",
                             style = MaterialTheme.typography.titleLarge,
