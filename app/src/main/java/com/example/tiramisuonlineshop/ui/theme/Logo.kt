@@ -28,8 +28,8 @@ fun PortraitLogo() {
                 painter = painterResource(id = R.drawable.app_logo),
                 contentDescription = "App Logo",
                 modifier = Modifier
-                    .width(screenWidth * 0.7f)   // 60% of screen width
-                    .height(screenWidth * 0.7f)  // Adjust for aspect ratio
+                    .width(screenWidth * 0.7f)   
+                    .height(screenWidth * 0.7f)  
             )
         }
     }
