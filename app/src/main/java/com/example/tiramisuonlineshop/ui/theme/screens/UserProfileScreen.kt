@@ -79,7 +79,6 @@ fun UserProfileScreen(navController: NavHostController) {
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Profile Image
             Box(
                 modifier = Modifier
                     .size(120.dp)
@@ -98,8 +97,6 @@ fun UserProfileScreen(navController: NavHostController) {
                     )
                 }
             }
-
-            //
             Spacer(modifier = Modifier.height(fieldSpacing))
 
             OutlinedTextField(
@@ -133,8 +130,6 @@ fun UserProfileScreen(navController: NavHostController) {
 
             Button(
                 onClick = {
-                    // Save logic
-
                     coroutineScope.launch {
                         snackbarHostState.showSnackbar("Profile saved successfully!")
                     }
