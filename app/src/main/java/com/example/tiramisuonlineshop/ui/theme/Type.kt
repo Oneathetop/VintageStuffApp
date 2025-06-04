@@ -8,14 +8,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.tiramisuonlineshop.R
 
-// Define Roboto font family using local font resources (add these fonts to your res/font folder)
+
 val RobotoFontFamily = FontFamily(
     Font(R.font.roboto_regular, FontWeight.Normal),
     Font(R.font.roboto_medium, FontWeight.Medium),
     Font(R.font.roboto_bold, FontWeight.Bold)
 )
 
-// Now create Typography with Roboto font applied
+
 val AppTypography = Typography(
     displayLarge = TextStyle(
         fontFamily = RobotoFontFamily,
