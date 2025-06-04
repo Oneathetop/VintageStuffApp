@@ -131,9 +131,7 @@ Column(modifier = Modifier.fillMaxSize()) {
                 }
             }
         }
-        //
     }
 }
-
-            }
+}
 
