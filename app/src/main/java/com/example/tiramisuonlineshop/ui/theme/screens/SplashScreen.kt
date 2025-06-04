@@ -26,11 +26,8 @@ fun SplashScreen(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFFF8F0)) // Cream base
+            .background(Color(0xFFFFF8F0)) 
     ) {
-        // No animated gradient circles
-
-        // Logo (static, fully visible)
         Column(
             modifier = Modifier
                 .fillMaxSize()
