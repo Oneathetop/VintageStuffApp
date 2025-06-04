@@ -72,7 +72,7 @@ fun ProductDetailsScreen(productId: String, navController: NavHostController) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Price: ${product.price}",
+                    text = "Price: $${product.price}",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
