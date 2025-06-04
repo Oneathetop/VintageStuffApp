@@ -62,9 +62,7 @@ fun FormScreen(navController: NavHostController) {
             )
 
             Button(
-                onClick = {
-                    // Placeholder: You can show a toast or snackbar
-                },
+                onClick = {},
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Submit")
