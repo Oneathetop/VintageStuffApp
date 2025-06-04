@@ -257,20 +257,20 @@ val unspecified_scheme = ColorFamily(
 
 
 private val customLightScheme = lightColorScheme(
-    primary = Color(0xFF8B5E3C),              // Soft brown
+    primary = Color(0xFF8B5E3C),              
     onPrimary = Color.White,
-    primaryContainer = Color(0xFFEEDDC8),     // Cream container
+    primaryContainer = Color(0xFFEEDDC8),     
     onPrimaryContainer = Color(0xFF4A2C14),
 
-    secondary = Color(0xFFD7B49E),            // Muted peach
+    secondary = Color(0xFFD7B49E),            
     onSecondary = Color(0xFF3E2F25),
     secondaryContainer = Color(0xFFFFE8D0),
     onSecondaryContainer = Color(0xFF3E2F25),
 
-    background = Color(0xFFFFFAF0),           // Vintage cream
+    background = Color(0xFFFFFAF0),           
     onBackground = Color(0xFF3B2F2A),
 
-    surface = Color(0xFFFFFBF5),              // Light cream
+    surface = Color(0xFFFFFBF5),             
     onSurface = Color(0xFF3B2F2A),
 
     error = Color(0xFFB00020),
@@ -279,14 +279,14 @@ private val customLightScheme = lightColorScheme(
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = ThemeManager.isDarkMode.value, // use your toggle state
+    darkTheme: Boolean = ThemeManager.isDarkMode.value, 
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (darkTheme) {
-        // You can either define your own dark scheme or use default dark scheme
+        
         darkColorScheme()
     } else {
-        lightScheme // your exported cream theme
+        lightScheme 
     }
 
     MaterialTheme(
