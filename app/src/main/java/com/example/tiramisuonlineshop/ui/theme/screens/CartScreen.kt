@@ -100,7 +100,7 @@ fun CartScreen(navController: NavHostController) {
                 //
                 }
 
-
+                if (CartManager.cartUsed.value) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
@@ -112,4 +112,5 @@ fun CartScreen(navController: NavHostController) {
             }
         }
     }
+}
 
