@@ -43,6 +43,7 @@ fun UserProfileScreen(navController: NavHostController) {
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     val fieldSpacing = if (isLandscape) 24.dp else 12.dp
     val scrollState = rememberScrollState()
+    var showError by remember { mutableStateOf(false) }
 
 
     val context = LocalContext.current
@@ -127,11 +128,15 @@ fun UserProfileScreen(navController: NavHostController) {
             )
 
             Spacer(modifier = Modifier.height(fieldSpacing))
-
+            //
             Button(
                 onClick = {
-                    coroutineScope.launch {
-                        snackbarHostState.showSnackbar("Profile saved successfully!")
+                    if (fullName.isBlank() || phoneNumber.isBlank() || address.isBlank()) {
+                        showError = true
+                    } else {
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar("Profile saved successfully!")
+                        }
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -139,6 +144,20 @@ fun UserProfileScreen(navController: NavHostController) {
                 Text("Save Profile")
             }
 
+            if (showError) {
+                AlertDialog(
+                    onDismissRequest = { showError = false },
+                    title = { Text("Missing Information") },
+                    text = { Text("Please fill in all fields before saving your profile.") },
+                    confirmButton = {
+                        TextButton(onClick = { showError = false }) {
+                            Text("OK")
+                        }
+                    }
+                )
+            }
+
+            //
         }
     }
 }

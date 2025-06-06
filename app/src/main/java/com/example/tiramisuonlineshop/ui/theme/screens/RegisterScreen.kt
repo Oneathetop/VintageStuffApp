@@ -1,13 +1,8 @@
 package com.example.tiramisuonlineshop.ui.theme.screens
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -18,6 +13,7 @@ fun RegisterScreen(navController: NavHostController) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var showError by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -30,7 +26,7 @@ fun RegisterScreen(navController: NavHostController) {
             "Register",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -62,11 +58,30 @@ fun RegisterScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { navController.popBackStack() },
+            onClick = {
+                if (name.isBlank() || email.isBlank() || password.isBlank()) {
+                    showError = true
+                } else {
+                    navController.popBackStack()
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Submit")
         }
     }
-}
 
+
+    if (showError) {
+        AlertDialog(
+            onDismissRequest = { showError = false },
+            title = { Text("Missing Information") },
+            text = { Text("Please fill in all fields before submitting.") },
+            confirmButton = {
+                TextButton(onClick = { showError = false }) {
+                    Text("OK")
+                }
+            }
+        )
+    }
+}
