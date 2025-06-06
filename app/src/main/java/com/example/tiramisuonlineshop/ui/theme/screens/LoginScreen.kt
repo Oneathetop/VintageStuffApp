@@ -1,23 +1,18 @@
 package com.example.tiramisuonlineshop.ui.theme.screens
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
-
 @Composable
 fun LoginScreen(navController: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var showErrorDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -26,7 +21,6 @@ fun LoginScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Text("Login", style = MaterialTheme.typography.headlineMedium)
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -50,7 +44,13 @@ fun LoginScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { navController.navigate("home") },
+            onClick = {
+                if (email.isBlank() || password.isBlank()) {
+                    showErrorDialog = true
+                } else {
+                    navController.navigate("home")
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Login")
@@ -60,5 +60,18 @@ fun LoginScreen(navController: NavHostController) {
             Text("No account? Register")
         }
     }
-}
 
+    // 🔔 Error dialog
+    if (showErrorDialog) {
+        AlertDialog(
+            onDismissRequest = { showErrorDialog = false },
+            title = { Text("Missing Information") },
+            text = { Text("Please enter both email and password before logging in.") },
+            confirmButton = {
+                TextButton(onClick = { showErrorDialog = false }) {
+                    Text("OK")
+                }
+            }
+        )
+    }
+}
