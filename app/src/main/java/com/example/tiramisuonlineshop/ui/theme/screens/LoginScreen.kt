@@ -61,7 +61,7 @@ fun LoginScreen(navController: NavHostController) {
         }
     }
 
-    // 🔔 Error dialog
+
     if (showErrorDialog) {
         AlertDialog(
             onDismissRequest = { showErrorDialog = false },
