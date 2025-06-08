@@ -33,7 +33,8 @@ fun RegisterScreen(navController: NavHostController) {
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Full Name") },
+            //label = { Text("Full Name") },
+            label = { com.example.tiramisuonlineshop.R.string.full_name},
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -42,7 +43,8 @@ fun RegisterScreen(navController: NavHostController) {
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
+            //label = { Text("Email") },
+            label = { com.example.tiramisuonlineshop.R.string.email },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -51,7 +53,8 @@ fun RegisterScreen(navController: NavHostController) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            //label = { Text("Password") },
+            label = { com.example.tiramisuonlineshop.R.string.password },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -75,8 +78,9 @@ fun RegisterScreen(navController: NavHostController) {
     if (showError) {
         AlertDialog(
             onDismissRequest = { showError = false },
-            title = { Text("Missing Information") },
-            text = { Text("Please fill in all fields before submitting.") },
+            //title = { Text("Missing Information") },
+            title = { com.example.tiramisuonlineshop.R.string.info_error },
+            text = { com.example.tiramisuonlineshop.R.string.null_submission },
             confirmButton = {
                 TextButton(onClick = { showError = false }) {
                     Text("OK")

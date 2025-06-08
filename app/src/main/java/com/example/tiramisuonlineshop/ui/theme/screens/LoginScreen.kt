@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
+
 @Composable
 fun LoginScreen(navController: NavHostController) {
     var email by remember { mutableStateOf("") }
@@ -28,7 +29,8 @@ fun LoginScreen(navController: NavHostController) {
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
+            //label = { Text("Email") },
+            label = { com.example.tiramisuonlineshop.R.string.email },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -37,7 +39,8 @@ fun LoginScreen(navController: NavHostController) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            //label = { Text("Password") },
+            label = { com.example.tiramisuonlineshop.R.string.password},
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -65,8 +68,9 @@ fun LoginScreen(navController: NavHostController) {
     if (showErrorDialog) {
         AlertDialog(
             onDismissRequest = { showErrorDialog = false },
-            title = { Text("Missing Information") },
-            text = { Text("Please enter both email and password before logging in.") },
+            title = { com.example.tiramisuonlineshop.R.string.info_error }, //info_error
+            //text = { Text("Please enter both email and password before logging in.") },
+            text = { com.example.tiramisuonlineshop.R.string.login_error},
             confirmButton = {
                 TextButton(onClick = { showErrorDialog = false }) {
                     Text("OK")
