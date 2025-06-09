@@ -29,8 +29,8 @@ fun LoginScreen(navController: NavHostController) {
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            //label = { Text("Email") },
-            label = { com.example.tiramisuonlineshop.R.string.email },
+            label = { Text("Email") },
+            //label = { com.example.tiramisuonlineshop.R.string.email },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -39,8 +39,8 @@ fun LoginScreen(navController: NavHostController) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            //label = { Text("Password") },
-            label = { com.example.tiramisuonlineshop.R.string.password},
+            label = { Text("Password") },
+            //label = { com.example.tiramisuonlineshop.R.string.password},
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -68,9 +68,9 @@ fun LoginScreen(navController: NavHostController) {
     if (showErrorDialog) {
         AlertDialog(
             onDismissRequest = { showErrorDialog = false },
-            title = { com.example.tiramisuonlineshop.R.string.info_error }, //info_error
-            //text = { Text("Please enter both email and password before logging in.") },
-            text = { com.example.tiramisuonlineshop.R.string.login_error},
+            title = { Text("Missing Information") }, //info_error
+            text = { Text("Please enter both email and password before logging in.") },
+            //text = { com.example.tiramisuonlineshop.R.string.login_error},
             confirmButton = {
                 TextButton(onClick = { showErrorDialog = false }) {
                     Text("OK")

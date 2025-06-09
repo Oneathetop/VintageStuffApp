@@ -65,8 +65,8 @@ fun UserProfileScreen(navController: NavHostController) {
     Scaffold(
 
         topBar = {
-            //TopAppBar(title = { Text("User Profile") })
-            TopAppBar(title = { (com.example.tiramisuonlineshop.R.string.user_profile) })
+            TopAppBar(title = { Text("User Profile") })
+            //TopAppBar(title = { (com.example.tiramisuonlineshop.R.string.user_profile) })
         },
         bottomBar = {
             BottomNavigationBar(navController)
@@ -105,8 +105,8 @@ fun UserProfileScreen(navController: NavHostController) {
             OutlinedTextField(
                 value = fullName,
                 onValueChange = { fullName = it },
-                //label = { Text("Full Name") },
-                label = { com.example.tiramisuonlineshop.R.string.full_name },
+                label = { Text("Full Name") },
+                //label = { com.example.tiramisuonlineshop.R.string.full_name },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -115,8 +115,8 @@ fun UserProfileScreen(navController: NavHostController) {
             OutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
-                //label = { Text("Phone Number") },
-                label = { com.example.tiramisuonlineshop.R.string.phone_number},
+                label = { Text("Phone Number") },
+                //label = { com.example.tiramisuonlineshop.R.string.phone_number},
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone)
             )
@@ -126,8 +126,8 @@ fun UserProfileScreen(navController: NavHostController) {
             OutlinedTextField(
                 value = address,
                 onValueChange = { address = it },
-                //label = { Text("Shipping Address") },
-                label = { com.example.tiramisuonlineshop.R.string.shipping_address },
+                label = { Text("Shipping Address") },
+                //label = { com.example.tiramisuonlineshop.R.string.shipping_address },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
             )
@@ -152,10 +152,10 @@ fun UserProfileScreen(navController: NavHostController) {
             if (showError) {
                 AlertDialog(
                     onDismissRequest = { showError = false },
-                    //title = { Text("Missing Information") },
-                    title = { com.example.tiramisuonlineshop.R.string.info_error },
-                    //text = { Text("Please fill all fields.") },
-                    text = { com.example.tiramisuonlineshop.R.string.missing_info },
+                    title = { Text("Missing Information") },
+                    //title = { com.example.tiramisuonlineshop.R.string.info_error },
+                    text = { Text("Please fill all fields.") },
+                    //text = { com.example.tiramisuonlineshop.R.string.missing_info },
                     confirmButton = {
                         TextButton(onClick = { showError = false }) {
                             Text("OK")

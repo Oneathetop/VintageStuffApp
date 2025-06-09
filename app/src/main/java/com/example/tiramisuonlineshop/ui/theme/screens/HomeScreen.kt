@@ -109,8 +109,8 @@ Column(modifier = Modifier.fillMaxSize()) {
     OutlinedTextField(
         value = searchQuery,
         onValueChange = { searchQuery = it },
-        //label = { Text("Search products") },
-        label = { com.example.tiramisuonlineshop.R.string.products_search },
+        label = { Text("Search products") },
+        //label = { com.example.tiramisuonlineshop.R.string.products_search },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 8.dp),
