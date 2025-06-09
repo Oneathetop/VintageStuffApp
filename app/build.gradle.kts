@@ -60,7 +60,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
     implementation("io.coil-kt:coil-compose:2.4.0")
-    implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.8.2")
     implementation("com.airbnb.android:lottie-compose:6.1.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
 }
