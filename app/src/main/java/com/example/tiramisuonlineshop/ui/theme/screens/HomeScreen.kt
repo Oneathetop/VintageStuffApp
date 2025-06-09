@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import coil.compose.rememberAsyncImagePainter
 import com.example.tiramisuonlineshop.model.Product
 
 
@@ -47,7 +48,8 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
     ) {
         Column {
             Image(
-                painter = painterResource(id = product.imageResId),
+                //painter = painterResource(id = product.imageResId),
+                painter = rememberAsyncImagePainter(product.imageResId),
                 contentDescription = product.name,
                 modifier = Modifier
                     .fillMaxWidth()

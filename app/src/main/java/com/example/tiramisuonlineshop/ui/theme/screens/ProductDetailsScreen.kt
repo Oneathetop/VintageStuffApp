@@ -22,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import coil.compose.rememberAsyncImagePainter
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,7 +55,8 @@ fun ProductDetailsScreen(productId: String, navController: NavHostController) {
                     .verticalScroll(rememberScrollState())
             ) {
                 Image(
-                    painter = painterResource(id = product.imageResId),
+                    //painter = painterResource(id = product.imageResId),
+                    painter = rememberAsyncImagePainter(product.imageResId),
                     contentDescription = product.name,
                     modifier = Modifier
                         .fillMaxWidth()
