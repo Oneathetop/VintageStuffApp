@@ -1,10 +1,13 @@
-package com.example.tiramisuonlineshop.ui
+package com.example.tiramisuonlineshop.ui.theme
 
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.tiramisuonlineshop.ui.CartScreen
+import com.example.tiramisuonlineshop.ui.HomeScreen
+import com.example.tiramisuonlineshop.ui.ProductDetailsScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.LoginScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.RegisterScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.SplashScreen
