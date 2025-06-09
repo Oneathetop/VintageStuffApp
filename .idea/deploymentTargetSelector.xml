@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="TiramisuOnlineShop.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-06-06T05:34:30.002344500Z">
+        <DropdownSelection timestamp="2025-06-09T05:02:09.556750600Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="Default" identifier="serial=10.7.0.40:39803;connection=b0254cd6" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Asus\.android\avd\Pixel_5.avd" />
             </handle>
           </Target>
         </DropdownSelection>
