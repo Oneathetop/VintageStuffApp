@@ -14,7 +14,7 @@ import com.example.tiramisuonlineshop.ui.theme.screens.UserProfileScreen
 
 @Composable
 fun AppNavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "splash") {
+    NavHost(navController = navController, startDestination = "login") {
         composable("register") { RegisterScreen(navController) }
         composable("login") { LoginScreen(navController) }
         composable("home") { HomeScreen(navController) }
