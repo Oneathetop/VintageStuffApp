@@ -1,40 +1,55 @@
-package com.example.tiramisuonlineshop.ui
+package com.example.tiramisuonlineshop.ui.theme.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
-import com.example.tiramisuonlineshop.ui.theme.ThemeManager
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.example.tiramisuonlineshop.R
 import com.example.tiramisuonlineshop.model.Product
+import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
+import com.example.tiramisuonlineshop.ui.theme.ThemeManager
 
 
 val sampleProducts = listOf(
-    Product("1", "Pokemon Card Collection", com.example.tiramisuonlineshop.R.drawable.pokemon_cards,50),
-    Product("2", "Retro Watch", com.example.tiramisuonlineshop.R.drawable.smartwatch,80),
-    Product("3", "Vintage Camera", com.example.tiramisuonlineshop.R.drawable.retro_camera,100),
-    Product("4", "Game boy", com.example.tiramisuonlineshop.R.drawable.gameboy,70)
+    Product("1", "Pokemon Card Collection", R.drawable.pokemon_cards,50),
+    Product("2", "Retro Watch", R.drawable.smartwatch,80),
+    Product("3", "Vintage Camera", R.drawable.retro_camera,100),
+    Product("4", "Game boy", R.drawable.gameboy,70)
 )
 
 @Composable
@@ -71,10 +86,11 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    var searchQuery by remember {mutableStateOf("")}
+    var searchQuery by remember { mutableStateOf("") }
     val filteredProducts = sampleProducts.filter {
         it.name.contains(searchQuery, ignoreCase = true)
     }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -97,44 +113,52 @@ fun HomeScreen(navController: NavHostController) {
         }
     ) { padding ->
 
-        //
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
         ) {
+            val isWide = maxWidth > 600.dp
+            val columns = if (isWide) 2 else 1
 
-            val columns = remember(maxWidth) {
-                if (maxWidth > 600.dp) 2 else 1
-            }
-Column(modifier = Modifier.fillMaxSize()) {
-    OutlinedTextField(
-        value = searchQuery,
-        onValueChange = { searchQuery = it },
-        label = { Text("Search products") },
-        //label = { com.example.tiramisuonlineshop.R.string.products_search },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 8.dp),
-        singleLine = true
-    )
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(columns),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(8.dp),
-                contentPadding = PaddingValues(vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(8.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(filteredProducts) { product ->
-                    ProductCard(product = product) {
-                        navController.navigate("details/${product.id}")
+                item {
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        label = { Text("Search products") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp)
+                    )
+                }
+
+                val chunks = filteredProducts.chunked(columns)
+                items(chunks) { rowItems ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        for (product in rowItems) {
+                            Box(modifier = Modifier.weight(1f)) {
+                                ProductCard(product = product) {
+                                    navController.navigate("details/${product.id}")
+                                }
+                            }
+                        }
+                        if (rowItems.size < columns) {
+                            // Fill remaining space to keep layout clean
+                            Spacer(modifier = Modifier.weight(1f))
+                        }
                     }
                 }
             }
         }
     }
 }
-}
+
 
