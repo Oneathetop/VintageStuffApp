@@ -4,8 +4,10 @@ import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +22,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -52,6 +56,7 @@ import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,7 +72,7 @@ fun UserProfileScreen(navController: NavHostController) {
     val fieldSpacing = if (isLandscape) 24.dp else 12.dp
     val scrollState = rememberScrollState()
     var showError by remember { mutableStateOf(false) }
-
+    var showConfirmationCard by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
     val imagePickerLauncher = rememberLauncherForActivityResult(
@@ -86,15 +91,13 @@ fun UserProfileScreen(navController: NavHostController) {
     }
 
     Scaffold(
-
         topBar = {
             TopAppBar(title = { Text("User Profile") })
-            //TopAppBar(title = { (com.example.tiramisuonlineshop.R.string.user_profile) })
         },
         bottomBar = {
             BottomNavigationBar(navController)
         },
-        snackbarHost = {SnackbarHost(snackbarHostState)}
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
         Column(
             modifier = Modifier
@@ -114,7 +117,6 @@ fun UserProfileScreen(navController: NavHostController) {
                 profileImageUri?.let { uri ->
                     Image(
                         painter = rememberAsyncImagePainter(uri),
-                        //contentDescription = "Profile Image",
                         contentDescription = "Profile Image",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -129,7 +131,6 @@ fun UserProfileScreen(navController: NavHostController) {
                 value = fullName,
                 onValueChange = { fullName = it },
                 label = { Text("Full Name") },
-                //label = { com.example.tiramisuonlineshop.R.string.full_name },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -139,7 +140,6 @@ fun UserProfileScreen(navController: NavHostController) {
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
                 label = { Text("Phone Number") },
-                //label = { com.example.tiramisuonlineshop.R.string.phone_number},
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone)
             )
@@ -150,20 +150,17 @@ fun UserProfileScreen(navController: NavHostController) {
                 value = address,
                 onValueChange = { address = it },
                 label = { Text("Shipping Address") },
-                //label = { com.example.tiramisuonlineshop.R.string.shipping_address },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
             )
 
             Spacer(modifier = Modifier.height(fieldSpacing))
-            //
-            Button(
 
+            Button(
                 onClick = {
                     if (fullName.isBlank() || phoneNumber.isBlank() || address.isBlank()) {
                         showError = true
                     } else {
-                        //
                         val userId = Firebase.auth.currentUser?.uid
                         if (userId != null) {
                             val db = Firebase.firestore
@@ -172,11 +169,13 @@ fun UserProfileScreen(navController: NavHostController) {
                                 "phoneNumber" to phoneNumber,
                                 "address" to address
                             )
-
                             db.collection("users").document(userId).set(userMap)
                                 .addOnSuccessListener {
                                     coroutineScope.launch {
                                         snackbarHostState.showSnackbar("Profile saved to Firestore!")
+                                        showConfirmationCard = true
+                                        delay(10000)
+                                        showConfirmationCard = false
                                     }
                                 }
                                 .addOnFailureListener { e ->
@@ -189,8 +188,6 @@ fun UserProfileScreen(navController: NavHostController) {
                                 snackbarHostState.showSnackbar("You must be logged in to save profile.")
                             }
                         }
-
-                        //
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -198,13 +195,29 @@ fun UserProfileScreen(navController: NavHostController) {
                 Text("Save Profile")
             }
 
+            AnimatedVisibility(visible = showConfirmationCard) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp)
+                        .clickable { showConfirmationCard = false },
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text("Saved Profile", style = MaterialTheme.typography.titleMedium)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text("👤 Name: $fullName")
+                        Text("📞 Phone: $phoneNumber")
+                        Text("🏠 Address: $address")
+                    }
+                }
+            }
+
             if (showError) {
                 AlertDialog(
                     onDismissRequest = { showError = false },
                     title = { Text("Missing Information") },
-                    //title = { com.example.tiramisuonlineshop.R.string.info_error },
                     text = { Text("Please fill all fields.") },
-                    //text = { com.example.tiramisuonlineshop.R.string.missing_info },
                     confirmButton = {
                         TextButton(onClick = { showError = false }) {
                             Text("OK")
