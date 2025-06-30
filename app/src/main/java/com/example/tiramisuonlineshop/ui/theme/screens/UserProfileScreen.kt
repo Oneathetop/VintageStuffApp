@@ -34,10 +34,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,11 +65,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun UserProfileScreen(navController: NavHostController) {
     var profileImageUri by remember { mutableStateOf<Uri?>(null) }
-    var fullName by remember { mutableStateOf("") }
-    var phoneNumber by remember { mutableStateOf("") }
-    var address by remember { mutableStateOf("") }
-    var snackbarHostState = remember { SnackbarHostState() }
-    var coroutineScope = rememberCoroutineScope()
+    var fullName by rememberSaveable { mutableStateOf("") }
+    var phoneNumber by rememberSaveable { mutableStateOf("") }
+    var address by rememberSaveable { mutableStateOf("") }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     val fieldSpacing = if (isLandscape) 24.dp else 12.dp
     val scrollState = rememberScrollState()
@@ -89,6 +91,28 @@ fun UserProfileScreen(navController: NavHostController) {
             profileImageUri = uri
         }
     }
+    //
+    LaunchedEffect(Unit) {
+        val userId = Firebase.auth.currentUser?.uid
+        if (userId != null) {
+            val db = Firebase.firestore
+            db.collection("users").document(userId).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        fullName = document.getString("fullName") ?: ""
+                        phoneNumber = document.getString("phoneNumber") ?: ""
+                        address = document.getString("address") ?: ""
+                    } else {
+                        // Reset if no data
+                        fullName = ""
+                        phoneNumber = ""
+                        address = ""
+                    }
+                }
+        }
+    }
+
+    //
 
     Scaffold(
         topBar = {
@@ -161,31 +185,33 @@ fun UserProfileScreen(navController: NavHostController) {
                     if (fullName.isBlank() || phoneNumber.isBlank() || address.isBlank()) {
                         showError = true
                     } else {
+                        showConfirmationCard = true
+                        coroutineScope.launch {
+                            delay(6000)
+                            showConfirmationCard = false
+                        }
                         val userId = Firebase.auth.currentUser?.uid
                         if (userId != null) {
                             val db = Firebase.firestore
                             val userMap = hashMapOf(
-                                "fullName" to fullName,
-                                "phoneNumber" to phoneNumber,
-                                "address" to address
+                                "Full Name" to fullName,
+                                "Phone Number" to phoneNumber,
+                                "Address" to address
                             )
                             db.collection("users").document(userId).set(userMap)
                                 .addOnSuccessListener {
                                     coroutineScope.launch {
-                                        snackbarHostState.showSnackbar("Profile saved to Firestore!")
-                                        showConfirmationCard = true
-                                        delay(10000)
-                                        showConfirmationCard = false
+                                        snackbarHostState.showSnackbar("Profile saved!")
                                     }
                                 }
                                 .addOnFailureListener { e ->
                                     coroutineScope.launch {
-                                        snackbarHostState.showSnackbar("Error saving profile: ${e.message}")
+                                        snackbarHostState.showSnackbar("Error: ${e.message}")
                                     }
                                 }
                         } else {
                             coroutineScope.launch {
-                                snackbarHostState.showSnackbar("You must be logged in to save profile.")
+                                snackbarHostState.showSnackbar("Please log in to save.")
                             }
                         }
                     }
