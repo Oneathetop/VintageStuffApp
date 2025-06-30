@@ -10,8 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.tiramisuonlineshop.ui.theme.AppNavGraph
 import com.example.tiramisuonlineshop.ui.theme.AppTheme
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.auth.ktx.auth
 
 
 class MainActivity : ComponentActivity() {
@@ -31,3 +29,4 @@ class MainActivity : ComponentActivity() {
 
     }
 }
+
