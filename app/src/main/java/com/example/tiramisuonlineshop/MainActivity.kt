@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.tiramisuonlineshop.ui.theme.AppTheme
 import androidx.navigation.compose.rememberNavController
 import com.example.tiramisuonlineshop.ui.theme.AppNavGraph
+import com.example.tiramisuonlineshop.ui.theme.AppTheme
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.ktx.auth
 
 
 class MainActivity : ComponentActivity() {

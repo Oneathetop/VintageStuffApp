@@ -2,15 +2,17 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
 }
 
 android {
     namespace = "com.example.tiramisuonlineshop"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.tiramisuonlineshop"
         minSdk = 33
+        //noinspection OldTargetApi
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -32,6 +34,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
+        @Suppress("DEPRECATION")
         jvmTarget = "11"
     }
     buildFeatures {
@@ -56,13 +59,30 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    //noinspection UseTomlInstead
     implementation("androidx.navigation:navigation-compose:2.9.0")
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    //noinspection UseTomlInstead
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    //noinspection UseTomlInstead
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
-    implementation("io.coil-kt:coil-compose:2.5.0")
-    implementation("androidx.compose.ui:ui-text-google-fonts:1.8.2")
-    implementation("com.airbnb.android:lottie-compose:6.1.0")
-    implementation("io.coil-kt:coil-compose:2.5.0")
-    implementation ("com.google.accompanist:accompanist-navigation-animation:0.34.0")
-    implementation ("androidx.compose.animation:animation:1.8.2")
+    //noinspection UseTomlInstead
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    //noinspection UseTomlInstead
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.8.3")
+    //noinspection UseTomlInstead
+    implementation("com.airbnb.android:lottie-compose:6.6.7")
+    //noinspection UseTomlInstead
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    //noinspection UseTomlInstead
+    implementation ("com.google.accompanist:accompanist-navigation-animation:0.36.0")
+    //noinspection UseTomlInstead
+    implementation ("androidx.compose.animation:animation:1.8.3")
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-auth-ktx")
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-database-ktx")
+    //noinspection UseTomlInstead
+    implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
+    //noinspection UseTomlInstead
+    implementation("com.google.firebase:firebase-analytics")
 }

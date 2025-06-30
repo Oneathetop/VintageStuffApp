@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "207350675341",
+    "project_id": "vintagestuffapp",
+    "storage_bucket": "vintagestuffapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207350675341:android:ebc5b3833a10d7c1422fc4",
+        "android_client_info": {
+          "package_name": "com.example.tiramisuonlineshop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbw3KzLwntfanCUf5cv3u_M1112yDxBAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
