@@ -59,30 +59,32 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    //noinspection UseTomlInstead
+
     implementation("androidx.navigation:navigation-compose:2.9.0")
-    //noinspection UseTomlInstead
+
     implementation("io.coil-kt:coil-compose:2.7.0")
-    //noinspection UseTomlInstead
+
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
-    //noinspection UseTomlInstead
+
     implementation("io.coil-kt:coil-compose:2.7.0")
-    //noinspection UseTomlInstead
+
     implementation("androidx.compose.ui:ui-text-google-fonts:1.8.3")
-    //noinspection UseTomlInstead
+
     implementation("com.airbnb.android:lottie-compose:6.6.7")
-    //noinspection UseTomlInstead
+
     implementation("io.coil-kt:coil-compose:2.7.0")
-    //noinspection UseTomlInstead
+
     implementation ("com.google.accompanist:accompanist-navigation-animation:0.36.0")
-    //noinspection UseTomlInstead
+
     implementation ("androidx.compose.animation:animation:1.8.3")
-    //noinspection UseTomlInstead
+
     implementation("com.google.firebase:firebase-auth-ktx")
-    //noinspection UseTomlInstead
+
     implementation("com.google.firebase:firebase-database-ktx")
-    //noinspection UseTomlInstead
+
     implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
-    //noinspection UseTomlInstead
+
     implementation("com.google.firebase:firebase-analytics")
 }
+
+apply(plugin = "com.google.gms.google-services")
