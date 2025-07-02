@@ -1,6 +1,5 @@
 package com.example.tiramisuonlineshop.ui.theme.screens
 
-import android.Manifest
 import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -51,7 +50,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -60,9 +58,7 @@ import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
-import com.google.firebase.storage.storage
 import kotlinx.coroutines.launch
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,11 +76,6 @@ fun UserProfileScreen(navController: NavHostController) {
     var showConfirmationCard by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
-    val cameraPermission = Manifest.permission.CAMERA
-
-
-
-
 
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicturePreview()
@@ -95,21 +86,9 @@ fun UserProfileScreen(navController: NavHostController) {
                     .data(it)
                     .size(Size.ORIGINAL)
                     .build()
-                    .data.toString().toUri()
+                    .data as Uri
             }
             profileImageUri = uri
-        }
-    }
-    //
-    val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            imagePickerLauncher.launch()
-        } else {
-            coroutineScope.launch {
-                snackbarHostState.showSnackbar("Camera permission denied.")
-            }
         }
     }
 
@@ -123,11 +102,6 @@ fun UserProfileScreen(navController: NavHostController) {
                         fullName = document.getString("Full Name") ?: ""
                         phoneNumber = document.getString("Phone Number") ?: ""
                         address = document.getString("Address") ?: ""
-
-                        val imageUrl = document.getString("ProfileImageUrl")
-                        if (!imageUrl.isNullOrEmpty()) {
-                            profileImageUri = imageUrl.toUri()
-                        }
                     } else {
                         fullName = ""
                         phoneNumber = ""
@@ -136,9 +110,6 @@ fun UserProfileScreen(navController: NavHostController) {
                 }
         }
     }
-
-
-    //
 
     Scaffold(
         topBar = {
@@ -175,13 +146,14 @@ fun UserProfileScreen(navController: NavHostController) {
                     )
                 }
             }
+
             Spacer(modifier = Modifier.height(fieldSpacing))
 
-            Button(onClick = {
-                permissionLauncher.launch(cameraPermission)
-            }) {
-                Text("Upload Profile Pic")
+            Button(onClick = { imagePickerLauncher.launch() }) {
+                Text("Capture Profile Image")
             }
+
+            Spacer(modifier = Modifier.height(fieldSpacing))
 
             OutlinedTextField(
                 value = fullName,
@@ -213,66 +185,28 @@ fun UserProfileScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(fieldSpacing))
 
             Button(
-                onClick ={val userId = Firebase.auth.currentUser?.uid
+                onClick = {
+                    val userId = Firebase.auth.currentUser?.uid
                     if (userId != null) {
                         val db = Firebase.firestore
-                        val storageRef = Firebase.storage.reference.child("profileImages/$userId.jpg")
-
-                        if (profileImageUri != null) {
-                            val uploadTask = storageRef.putFile(profileImageUri!!)
-                            uploadTask
-                                .continueWithTask { task ->
-                                    if (!task.isSuccessful) {
-                                        task.exception?.let { throw it }
-                                    }
-                                    storageRef.downloadUrl
+                        val userMap = hashMapOf(
+                            "Full Name" to fullName,
+                            "Phone Number" to phoneNumber,
+                            "Address" to address
+                        )
+                        db.collection("users").document(userId).set(userMap)
+                            .addOnSuccessListener {
+                                coroutineScope.launch {
+                                    snackbarHostState.showSnackbar("Profile saved!")
                                 }
-                                .addOnSuccessListener { downloadUri ->
-                                    val userMap = hashMapOf(
-                                        "Full Name" to fullName,
-                                        "Phone Number" to phoneNumber,
-                                        "Address" to address,
-                                        "ProfileImageUrl" to downloadUri.toString()
-                                    )
-
-                                    db.collection("users").document(userId).set(userMap)
-                                        .addOnSuccessListener {
-                                            coroutineScope.launch {
-                                                snackbarHostState.showSnackbar("Profile and image saved!")
-                                            }
-                                        }
-                                        .addOnFailureListener { e ->
-                                            coroutineScope.launch {
-                                                snackbarHostState.showSnackbar("Firestore Error: ${e.message}")
-                                            }
-                                        }
+                            }
+                            .addOnFailureListener { e ->
+                                coroutineScope.launch {
+                                    snackbarHostState.showSnackbar("Firestore Error: ${e.message}")
                                 }
-                                .addOnFailureListener { e ->
-                                    coroutineScope.launch {
-                                        snackbarHostState.showSnackbar("Image Upload Failed: ${e.message}")
-                                    }
-                                }
-                        } else {
-                            // If no image, just save text info
-                            val userMap = hashMapOf(
-                                "Full Name" to fullName,
-                                "Phone Number" to phoneNumber,
-                                "Address" to address
-                            )
-                            db.collection("users").document(userId).set(userMap)
-                                .addOnSuccessListener {
-                                    coroutineScope.launch {
-                                        snackbarHostState.showSnackbar("Profile saved without image.")
-                                    }
-                                }
-                                .addOnFailureListener { e ->
-                                    coroutineScope.launch {
-                                        snackbarHostState.showSnackbar("Firestore Error: ${e.message}")
-                                    }
-                                }
-                        }
+                            }
                     }
-                } ,
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Save Profile")
