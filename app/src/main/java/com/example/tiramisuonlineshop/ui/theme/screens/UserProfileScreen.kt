@@ -60,7 +60,7 @@ import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
-import kotlinx.coroutines.delay
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.launch
 
 
@@ -120,11 +120,15 @@ fun UserProfileScreen(navController: NavHostController) {
             db.collection("users").document(userId).get()
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
-                        fullName = document.getString("fullName") ?: ""
-                        phoneNumber = document.getString("phoneNumber") ?: ""
-                        address = document.getString("address") ?: ""
+                        fullName = document.getString("Full Name") ?: ""
+                        phoneNumber = document.getString("Phone Number") ?: ""
+                        address = document.getString("Address") ?: ""
+
+                        val imageUrl = document.getString("ProfileImageUrl")
+                        if (!imageUrl.isNullOrEmpty()) {
+                            profileImageUri = imageUrl.toUri()
+                        }
                     } else {
-                        // Reset if no data
                         fullName = ""
                         phoneNumber = ""
                         address = ""
@@ -132,6 +136,7 @@ fun UserProfileScreen(navController: NavHostController) {
                 }
         }
     }
+
 
     //
 
@@ -208,18 +213,47 @@ fun UserProfileScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(fieldSpacing))
 
             Button(
-                onClick = {
-                    if (fullName.isBlank() || phoneNumber.isBlank() || address.isBlank()) {
-                        showError = true
-                    } else {
-                        showConfirmationCard = true
-                        coroutineScope.launch {
-                            delay(6000)
-                            showConfirmationCard = false
-                        }
-                        val userId = Firebase.auth.currentUser?.uid
-                        if (userId != null) {
-                            val db = Firebase.firestore
+                onClick ={val userId = Firebase.auth.currentUser?.uid
+                    if (userId != null) {
+                        val db = Firebase.firestore
+                        val storageRef = Firebase.storage.reference.child("profileImages/$userId.jpg")
+
+                        if (profileImageUri != null) {
+                            val uploadTask = storageRef.putFile(profileImageUri!!)
+                            uploadTask
+                                .continueWithTask { task ->
+                                    if (!task.isSuccessful) {
+                                        task.exception?.let { throw it }
+                                    }
+                                    storageRef.downloadUrl
+                                }
+                                .addOnSuccessListener { downloadUri ->
+                                    val userMap = hashMapOf(
+                                        "Full Name" to fullName,
+                                        "Phone Number" to phoneNumber,
+                                        "Address" to address,
+                                        "ProfileImageUrl" to downloadUri.toString()
+                                    )
+
+                                    db.collection("users").document(userId).set(userMap)
+                                        .addOnSuccessListener {
+                                            coroutineScope.launch {
+                                                snackbarHostState.showSnackbar("Profile and image saved!")
+                                            }
+                                        }
+                                        .addOnFailureListener { e ->
+                                            coroutineScope.launch {
+                                                snackbarHostState.showSnackbar("Firestore Error: ${e.message}")
+                                            }
+                                        }
+                                }
+                                .addOnFailureListener { e ->
+                                    coroutineScope.launch {
+                                        snackbarHostState.showSnackbar("Image Upload Failed: ${e.message}")
+                                    }
+                                }
+                        } else {
+                            // If no image, just save text info
                             val userMap = hashMapOf(
                                 "Full Name" to fullName,
                                 "Phone Number" to phoneNumber,
@@ -228,21 +262,17 @@ fun UserProfileScreen(navController: NavHostController) {
                             db.collection("users").document(userId).set(userMap)
                                 .addOnSuccessListener {
                                     coroutineScope.launch {
-                                        snackbarHostState.showSnackbar("Profile saved!")
+                                        snackbarHostState.showSnackbar("Profile saved without image.")
                                     }
                                 }
                                 .addOnFailureListener { e ->
                                     coroutineScope.launch {
-                                        snackbarHostState.showSnackbar("Error: ${e.message}")
+                                        snackbarHostState.showSnackbar("Firestore Error: ${e.message}")
                                     }
                                 }
-                        } else {
-                            coroutineScope.launch {
-                                snackbarHostState.showSnackbar("Please log in to save.")
-                            }
                         }
                     }
-                },
+                } ,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Save Profile")

@@ -93,6 +93,9 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.7.2")
 
     implementation("androidx.compose.material3:material3:1.1.2")
+
+    implementation("com.google.firebase:firebase-storage-ktx")
+
 }
 
 apply(plugin = "com.google.gms.google-services")
