@@ -1,9 +1,11 @@
 package com.example.tiramisuonlineshop.ui.theme.screens
 
+import android.Manifest
 import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -61,6 +63,7 @@ import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserProfileScreen(navController: NavHostController) {
@@ -77,6 +80,12 @@ fun UserProfileScreen(navController: NavHostController) {
     var showConfirmationCard by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
+    val cameraPermission = Manifest.permission.CAMERA
+
+
+
+
+
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicturePreview()
     ) { bitmap ->
@@ -92,6 +101,18 @@ fun UserProfileScreen(navController: NavHostController) {
         }
     }
     //
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            imagePickerLauncher.launch()
+        } else {
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar("Camera permission denied.")
+            }
+        }
+    }
+
     LaunchedEffect(Unit) {
         val userId = Firebase.auth.currentUser?.uid
         if (userId != null) {
@@ -150,6 +171,12 @@ fun UserProfileScreen(navController: NavHostController) {
                 }
             }
             Spacer(modifier = Modifier.height(fieldSpacing))
+
+            Button(onClick = {
+                permissionLauncher.launch(cameraPermission)
+            }) {
+                Text("Upload Profile Pic")
+            }
 
             OutlinedTextField(
                 value = fullName,
