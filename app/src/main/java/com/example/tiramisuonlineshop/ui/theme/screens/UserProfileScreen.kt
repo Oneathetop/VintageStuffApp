@@ -1,24 +1,15 @@
 package com.example.tiramisuonlineshop.ui.theme.screens
 
 import android.content.res.Configuration
-import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.launch
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
@@ -35,7 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,26 +34,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.size.Size
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserProfileScreen(navController: NavHostController) {
-    var profileImageUri by remember { mutableStateOf<Uri?>(null) }
     var fullName by rememberSaveable { mutableStateOf("") }
     var phoneNumber by rememberSaveable { mutableStateOf("") }
     var address by rememberSaveable { mutableStateOf("") }
@@ -74,42 +54,6 @@ fun UserProfileScreen(navController: NavHostController) {
     val scrollState = rememberScrollState()
     var showError by remember { mutableStateOf(false) }
     var showConfirmationCard by remember { mutableStateOf(false) }
-
-    val context = LocalContext.current
-
-    val imagePickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicturePreview()
-    ) { bitmap ->
-        if (bitmap != null) {
-            val uri = bitmap.let {
-                ImageRequest.Builder(context)
-                    .data(it)
-                    .size(Size.ORIGINAL)
-                    .build()
-                    .data as Uri
-            }
-            profileImageUri = uri
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        val userId = Firebase.auth.currentUser?.uid
-        if (userId != null) {
-            val db = Firebase.firestore
-            db.collection("users").document(userId).get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        fullName = document.getString("Full Name") ?: ""
-                        phoneNumber = document.getString("Phone Number") ?: ""
-                        address = document.getString("Address") ?: ""
-                    } else {
-                        fullName = ""
-                        phoneNumber = ""
-                        address = ""
-                    }
-                }
-        }
-    }
 
     Scaffold(
         topBar = {
@@ -128,30 +72,6 @@ fun UserProfileScreen(navController: NavHostController) {
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(
-                modifier = Modifier
-                    .size(120.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primaryContainer),
-                contentAlignment = Alignment.Center
-            ) {
-                profileImageUri?.let { uri ->
-                    Image(
-                        painter = rememberAsyncImagePainter(uri),
-                        contentDescription = "Profile Image",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(CircleShape)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(fieldSpacing))
-
-            Button(onClick = { imagePickerLauncher.launch() }) {
-                Text("Capture Profile Image")
-            }
 
             Spacer(modifier = Modifier.height(fieldSpacing))
 
@@ -186,25 +106,13 @@ fun UserProfileScreen(navController: NavHostController) {
 
             Button(
                 onClick = {
-                    val userId = Firebase.auth.currentUser?.uid
-                    if (userId != null) {
-                        val db = Firebase.firestore
-                        val userMap = hashMapOf(
-                            "Full Name" to fullName,
-                            "Phone Number" to phoneNumber,
-                            "Address" to address
-                        )
-                        db.collection("users").document(userId).set(userMap)
-                            .addOnSuccessListener {
-                                coroutineScope.launch {
-                                    snackbarHostState.showSnackbar("Profile saved!")
-                                }
-                            }
-                            .addOnFailureListener { e ->
-                                coroutineScope.launch {
-                                    snackbarHostState.showSnackbar("Firestore Error: ${e.message}")
-                                }
-                            }
+                    if (fullName.isBlank() || phoneNumber.isBlank() || address.isBlank()) {
+                        showError = true
+                    } else {
+                        showConfirmationCard = true
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar("Profile info saved!")
+                        }
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
