@@ -208,6 +208,8 @@ fun UserProfileScreen(navController: NavHostController) {
                 }
             }
 
+            Spacer(modifier = Modifier.height(36.dp))
+
             Button(onClick = {navController.navigate("map")}) {
                 Text("View Store Locations")
             }
