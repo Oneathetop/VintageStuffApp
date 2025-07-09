@@ -37,19 +37,19 @@ fun MapScreen(navController: NavHostController) {
             WebView(context).apply {
                 webViewClient = WebViewClient()
 
-                // ✅ JavaScript and DOM storage
+                // ✅ Enable JavaScript and DOM storage
                 settings.javaScriptEnabled = true
                 settings.domStorageEnabled = true
 
-                // ✅ Enable Zoom Controls
+                // ✅ Enable zoom
                 settings.setSupportZoom(true)
                 settings.builtInZoomControls = true
                 settings.displayZoomControls = false
 
-                // ✅ Allow geolocation
+                // ✅ Enable Geolocation
                 settings.setGeolocationEnabled(true)
 
-                // ✅ WebChromeClient handles location permissions
+                // ✅ Handle geolocation permission popup
                 webChromeClient = object : WebChromeClient() {
                     override fun onGeolocationPermissionsShowPrompt(
                         origin: String,
@@ -59,7 +59,7 @@ fun MapScreen(navController: NavHostController) {
                     }
                 }
 
-                // ✅ Load the map.html from assets/www
+                // ✅ Load local HTML file with Leaflet map
                 loadUrl("file:///android_asset/www/map.html")
             }
         })
