@@ -208,6 +208,10 @@ fun UserProfileScreen(navController: NavHostController) {
                 }
             }
 
+            Button(onClick = {navController.navigate("map")}) {
+                Text("View Store Locations")
+            }
+
             if (showError) {
                 AlertDialog(
                     onDismissRequest = { showError = false },
