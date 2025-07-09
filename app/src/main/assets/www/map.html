@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html lang="">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src=./script.js></script>
     <style>
-        body, html, #map { margin:0; padding:0; height:100%; width:100%; }
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
     </style>
-    <title></title>
 </head>
 <body>
 <div id="map"></div>
 <script>
-    const map = L.map('map').fitWorld();
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap'
-    }).addTo(map);
-    map.locate({ setView: true, maxZoom: 16 });
-    function onLocationFound(e) {
-      L.marker(e.latlng).addTo(map).bindPopup("You are here").openPopup();
-    }
-    map.on('locationfound', onLocationFound);
-    map.on('locationerror', e => console.warn(e.message));
+const map = L.map('map').setView([7.8731, 80.7718], 6); // Sri Lanka center
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+maxZoom: 18,
+attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+// Optional: add markers
+L.marker([6.9271, 79.8612]).addTo(map).bindPopup("Colombo Store");
+L.marker([7.2906, 80.6337]).addTo(map).bindPopup("Kandy Store");
 </script>
 </body>
 </html>
-

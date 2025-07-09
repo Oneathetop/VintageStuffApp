@@ -34,7 +34,7 @@ fun MapScreen(navController: NavHostController) {
                 settings.setSupportZoom(true)
                 settings.builtInZoomControls = true
                 settings.displayZoomControls = false
-                loadUrl("file:///android_asset/www/map.html")
+                loadUrl("file:///android_asset/app/main/assets/map.html")
             }
         })
     }
