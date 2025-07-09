@@ -36,6 +36,7 @@ fun MapScreen(navController: NavHostController) {
                 settings.displayZoomControls = false
                 loadUrl("file:///android_asset/app/main/assets/map.html")
             }
+
         })
     }
 }
