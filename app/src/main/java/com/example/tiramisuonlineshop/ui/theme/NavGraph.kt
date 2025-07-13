@@ -6,9 +6,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.tiramisuonlineshop.ui.CartScreen
+import com.example.tiramisuonlineshop.ui.theme.screens.GoogleMapScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.HomeScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.LoginScreen
-import com.example.tiramisuonlineshop.ui.theme.screens.MapScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.ProductDetailsScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.RegisterScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.SplashScreen
@@ -28,7 +28,7 @@ fun AppNavGraph(navController: NavHostController) {
         composable("cart") { CartScreen(navController) }
         composable("profile") { UserProfileScreen(navController) }
         composable("splash") { SplashScreen(navController)}
-        composable("map") { MapScreen(navController) }
+        composable("map") { GoogleMapScreen(navController) }
     }
         }
 
