@@ -25,8 +25,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -39,8 +41,12 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.example.tiramisuonlineshop.ui.theme.CartManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.net.URL
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,6 +56,8 @@ fun ProductDetailsScreen(productId: String, navController: NavHostController) {
     var quantity by remember { mutableIntStateOf(1) }
     val scope = rememberCoroutineScope()
     val bounceAnim = remember { Animatable(1f) }
+    var convertedPrice by remember { mutableStateOf<String?>(null) }
+    var isLoadingConversion by remember { mutableStateOf(true) }
 
     Scaffold(
         topBar = {
@@ -68,6 +76,24 @@ fun ProductDetailsScreen(productId: String, navController: NavHostController) {
     ) { padding ->
 
         if (product != null) {
+            LaunchedEffect(product) {
+                product?.let {
+                    isLoadingConversion = true
+                    try {
+                        val response = withContext(Dispatchers.IO) {
+                            URL("https://api.exchangerate-api.com/v4/latest/USD").readText()
+                        }
+                        val rate = JSONObject(response).getJSONObject("rates").getDouble("LKR")
+                        val lkrPrice = rate * it.price
+                        convertedPrice = "රු%.2f".format(lkrPrice)
+                    } catch (e: Exception) {
+                        convertedPrice = "Conversion failed"
+                    } finally {
+                        isLoadingConversion = false
+                    }
+                }
+            }
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -98,10 +124,26 @@ fun ProductDetailsScreen(productId: String, navController: NavHostController) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Price: $${product.price}",
+                    text = "USD Price: $${product.price}",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
+                if (isLoadingConversion) {
+                    Text(
+                        "Converting to LKR...",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                        )
+                } else {
+                    convertedPrice?.let {
+                        Text(
+                            "LKR Price: $it",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+
 
                 Spacer(modifier = Modifier.height(32.dp))
 
