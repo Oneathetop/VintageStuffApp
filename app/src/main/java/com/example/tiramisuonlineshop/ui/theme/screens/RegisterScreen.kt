@@ -34,6 +34,7 @@ fun RegisterScreen(navController: NavHostController) {
     var password by remember { mutableStateOf("") }
     var showError by remember { mutableStateOf(false) }
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -119,3 +120,4 @@ fun RegisterScreen(navController: NavHostController) {
         )
     }
 }
+

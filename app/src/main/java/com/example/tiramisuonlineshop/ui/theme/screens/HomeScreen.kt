@@ -54,6 +54,7 @@ val sampleProducts = listOf(
 
 @Composable
 fun ProductCard(product: Product, onClick: () -> Unit) {
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -90,6 +91,8 @@ fun HomeScreen(navController: NavHostController) {
     val filteredProducts = sampleProducts.filter {
         it.name.contains(searchQuery, ignoreCase = true)
     }
+
+
 
     Scaffold(
         topBar = {

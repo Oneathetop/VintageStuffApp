@@ -44,6 +44,7 @@ fun LoginScreen(navController: NavHostController) {
     var showErrorDialog by remember { mutableStateOf(false) }
     var passwordVisible by remember { mutableStateOf(false) }
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -132,3 +133,4 @@ fun LoginScreen(navController: NavHostController) {
         )
     }
 }
+
