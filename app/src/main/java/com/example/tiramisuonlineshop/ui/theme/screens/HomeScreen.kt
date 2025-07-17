@@ -46,10 +46,30 @@ import com.example.tiramisuonlineshop.ui.theme.ThemeManager
 
 
 val sampleProducts = listOf(
-    Product("1", "Pokemon Card Collection", R.drawable.pokemon_cards,50),
-    Product("2", "Retro Watch", R.drawable.smartwatch,80),
-    Product("3", "Vintage Camera", R.drawable.retro_camera,100),
-    Product("4", "Game boy", R.drawable.gameboy,70)
+    Product("1", "Pokemon Card Collection 1", R.drawable.pokemon_cards,50,"Cards"),
+    Product("2", "Pokemon Card Collection 2", R.drawable.cards_3,45,"Cards"),
+    Product("3", "Pokemon Card Collection 3", R.drawable.cards_2,60,"Cards"),
+    Product("4", "Pokemon Card Collection 4", R.drawable.cards_5,65,"Cards"),
+    Product("5", "Pokemon Card Collection 5", R.drawable.cards_4,65,"Cards"),
+
+    Product("", "Signed Jersey 1", R.drawable.rm_signed,200,"Signed Jerseys"),
+    Product("", "Signed Jersey 2", R.drawable.rm_signed_1,200,"Signed Jerseys"),
+    Product("", "Signed Jersey 3", R.drawable.manutd_signed_1,150,"Signed Jerseys"),
+    Product("", "Signed Jersey 4", R.drawable.manutd_signed_2,150,"Signed Jerseys"),
+    Product("", "Signed Jersey 5", R.drawable.juventus_signed,100,"Signed Jerseys"),
+
+
+    Product("", "Vintage Jersey 1", R.drawable.rm_vintage,180,"Vintage Jerseys"),
+    Product("", "Vintage Jersey 2", R.drawable.rm_vintage_1,180,"Vintage Jerseys"),
+    Product("", "Vintage Jersey 3", R.drawable.rm_vintage_2,180,"Vintage Jerseys"),
+    Product("", "Vintage Jersey 4", R.drawable.rm_vintage_3,180,"Vintage Jerseys"),
+    Product("", "Vintage Jersey 5", R.drawable.manutd_vintage,50,"Vintage Jerseys"),
+
+    Product("", "Retro Watch", R.drawable.smartwatch,80,"Vintage Devices"),
+    Product("", "Vintage Camera", R.drawable.retro_camera,100,"Vintage Devices"),
+    Product("", "Game boy", R.drawable.gameboy,70,"Vintage Devices"),
+    Product("", "Gaming Cartridge", R.drawable.gaming_cartridge,50,"Vintage Devices"),
+
 )
 
 @Composable
