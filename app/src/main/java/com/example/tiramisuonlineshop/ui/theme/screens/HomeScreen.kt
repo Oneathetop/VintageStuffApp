@@ -8,13 +8,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
@@ -52,23 +52,23 @@ val sampleProducts = listOf(
     Product("4", "Pokemon Card Collection 4", R.drawable.cards_5,65,"Cards"),
     Product("5", "Pokemon Card Collection 5", R.drawable.cards_4,65,"Cards"),
 
-    Product("", "Signed Jersey 1", R.drawable.rm_signed,200,"Signed Jerseys"),
-    Product("", "Signed Jersey 2", R.drawable.rm_signed_1,200,"Signed Jerseys"),
-    Product("", "Signed Jersey 3", R.drawable.manutd_signed_1,150,"Signed Jerseys"),
-    Product("", "Signed Jersey 4", R.drawable.manutd_signed_2,150,"Signed Jerseys"),
-    Product("", "Signed Jersey 5", R.drawable.juventus_signed,100,"Signed Jerseys"),
+    Product("6", "Signed Jersey 1", R.drawable.rm_signed,200,"Signed Jerseys"),
+    Product("7", "Signed Jersey 2", R.drawable.rm_signed_1,200,"Signed Jerseys"),
+    Product("8", "Signed Jersey 3", R.drawable.manutd_signed_1,150,"Signed Jerseys"),
+    Product("9", "Signed Jersey 4", R.drawable.manutd_signed_2,150,"Signed Jerseys"),
+    Product("10", "Signed Jersey 5", R.drawable.juventus_signed,100,"Signed Jerseys"),
 
 
-    Product("", "Vintage Jersey 1", R.drawable.rm_vintage,180,"Vintage Jerseys"),
-    Product("", "Vintage Jersey 2", R.drawable.rm_vintage_1,180,"Vintage Jerseys"),
-    Product("", "Vintage Jersey 3", R.drawable.rm_vintage_2,180,"Vintage Jerseys"),
-    Product("", "Vintage Jersey 4", R.drawable.rm_vintage_3,180,"Vintage Jerseys"),
-    Product("", "Vintage Jersey 5", R.drawable.manutd_vintage,50,"Vintage Jerseys"),
+    Product("11", "Vintage Jersey 1", R.drawable.rm_vintage,180,"Vintage Jerseys"),
+    Product("12", "Vintage Jersey 2", R.drawable.rm_vintage_1,180,"Vintage Jerseys"),
+    Product("13", "Vintage Jersey 3", R.drawable.rm_vintage_2,180,"Vintage Jerseys"),
+    Product("14", "Vintage Jersey 4", R.drawable.rm_vintage_3,180,"Vintage Jerseys"),
+    Product("15", "Vintage Jersey 5", R.drawable.manutd_vintage,50,"Vintage Jerseys"),
 
-    Product("", "Retro Watch", R.drawable.smartwatch,80,"Vintage Devices"),
-    Product("", "Vintage Camera", R.drawable.retro_camera,100,"Vintage Devices"),
-    Product("", "Game boy", R.drawable.gameboy,70,"Vintage Devices"),
-    Product("", "Gaming Cartridge", R.drawable.gaming_cartridge,50,"Vintage Devices"),
+    Product("16", "Retro Watch", R.drawable.smartwatch,80,"Vintage Devices"),
+    Product("17", "Vintage Camera", R.drawable.retro_camera,100,"Vintage Devices"),
+    Product("18", "Game boy", R.drawable.gameboy,70,"Vintage Devices"),
+    Product("19", "Gaming Cartridge", R.drawable.gaming_cartridge,50,"Vintage Devices"),
 
 )
 
@@ -160,25 +160,33 @@ fun HomeScreen(navController: NavHostController) {
                     )
                 }
 
-                val chunks = filteredProducts.chunked(columns)
-                items(chunks) { rowItems ->
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        for (product in rowItems) {
-                            Box(modifier = Modifier.weight(1f)) {
-                                ProductCard(product = product) {
-                                    navController.navigate("details/${product.id}")
+                //
+                val categorized = filteredProducts.groupBy { it.category }
+
+                categorized.forEach { (category, itemsInCategory) ->
+                    item {
+                        Text(
+                            text = category,
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
+                        )
+
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            contentPadding = PaddingValues(horizontal = 16.dp)
+                        ) {
+                            items(itemsInCategory) { product ->
+                                Box(modifier = Modifier.fillParentMaxWidth(0.6f)) {
+                                    ProductCard(product = product) {
+                                        navController.navigate("details/${product.id}")
+                                    }
                                 }
                             }
                         }
-                        if (rowItems.size < columns) {
-                            // Fill remaining space to keep layout clean
-                            Spacer(modifier = Modifier.weight(1f))
-                        }
                     }
                 }
+
+                //
             }
         }
     }
