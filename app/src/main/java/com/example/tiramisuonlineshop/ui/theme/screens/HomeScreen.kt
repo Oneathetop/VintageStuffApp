@@ -38,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
@@ -54,18 +55,18 @@ val sampleProducts = listOf(
     Product("4", "Pokemon Card Collection 4", R.drawable.cards_5,65,"Cards"),
     Product("5", "Pokemon Card Collection 5", R.drawable.cards_4,65,"Cards"),
 
-    Product("6", "Signed Jersey 1", R.drawable.rm_signed,200,"Signed Jerseys"),
-    Product("7", "Signed Jersey 2", R.drawable.rm_signed_1,200,"Signed Jerseys"),
-    Product("8", "Signed Jersey 3", R.drawable.manutd_signed_1,150,"Signed Jerseys"),
-    Product("9", "Signed Jersey 4", R.drawable.manutd_signed_2,150,"Signed Jerseys"),
-    Product("10", "Signed Jersey 5", R.drawable.juventus_signed,100,"Signed Jerseys"),
+    Product("6", "Real Madrid", R.drawable.rm_signed,200,"Signed Jerseys"),
+    Product("7", "Real Madrid", R.drawable.rm_signed_1,200,"Signed Jerseys"),
+    Product("8", "Manchester United", R.drawable.manutd_signed_1,150,"Signed Jerseys"),
+    Product("9", "Manchester United", R.drawable.manutd_signed_2,150,"Signed Jerseys"),
+    Product("10", "Juventus", R.drawable.juventus_signed,100,"Signed Jerseys"),
 
 
-    Product("11", "Vintage Jersey 1", R.drawable.rm_vintage,180,"Vintage Jerseys"),
-    Product("12", "Vintage Jersey 2", R.drawable.rm_vintage_1,180,"Vintage Jerseys"),
-    Product("13", "Vintage Jersey 3", R.drawable.rm_vintage_2,180,"Vintage Jerseys"),
-    Product("14", "Vintage Jersey 4", R.drawable.rm_vintage_3,180,"Vintage Jerseys"),
-    Product("15", "Vintage Jersey 5", R.drawable.manutd_vintage,50,"Vintage Jerseys"),
+    Product("11", "Real Madrid", R.drawable.rm_vintage,180,"Vintage Jerseys"),
+    Product("12", "Real Madrid", R.drawable.rm_vintage_1,180,"Vintage Jerseys"),
+    Product("13", "Real Madrid", R.drawable.rm_vintage_2,180,"Vintage Jerseys"),
+    Product("14", "Real Madrid", R.drawable.rm_vintage_3,180,"Vintage Jerseys"),
+    Product("15", "Manchester United", R.drawable.manutd_vintage,50,"Vintage Jerseys"),
 
     Product("16", "Retro Watch", R.drawable.smartwatch,80,"Vintage Devices"),
     Product("17", "Vintage Camera", R.drawable.retro_camera,100,"Vintage Devices"),
@@ -84,7 +85,7 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
             .clickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Column (modifier = Modifier.width(180.dp)){
+        Column (modifier = Modifier.width(240.dp)){
             Image(
                 //painter = painterResource(id = product.imageResId),
                 painter = rememberAsyncImagePainter(product.imageResId),
@@ -119,7 +120,12 @@ fun HomeScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Home") },
+                title = {
+                    Text(
+                        text="Home",
+                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                        ) },
+
                 actions = {
                     IconButton(onClick = { ThemeManager.toggleTheme() }) {
                         Icon(
@@ -169,7 +175,7 @@ fun HomeScreen(navController: NavHostController) {
                     item {
                         Text(
                             text = category,
-                            style = MaterialTheme.typography.titleLarge,
+                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                             modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
                         )
 
