@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -82,14 +84,14 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
             .clickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Column {
+        Column (modifier = Modifier.width(180.dp)){
             Image(
                 //painter = painterResource(id = product.imageResId),
                 painter = rememberAsyncImagePainter(product.imageResId),
                 contentDescription = product.name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp),
+                    .aspectRatio(4f / 3f),
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -176,7 +178,7 @@ fun HomeScreen(navController: NavHostController) {
                             contentPadding = PaddingValues(horizontal = 16.dp)
                         ) {
                             items(itemsInCategory) { product ->
-                                Box(modifier = Modifier.fillParentMaxWidth(0.6f)) {
+                                Box{
                                     ProductCard(product = product) {
                                         navController.navigate("details/${product.id}")
                                     }
