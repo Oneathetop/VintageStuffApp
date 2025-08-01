@@ -50,24 +50,24 @@ import com.example.tiramisuonlineshop.ui.theme.ThemeManager
 
 
 val sampleProducts = listOf(
-    Product("1", "Pokemon Card Collection 1", R.drawable.pokemon_cards,50,"Cards"),
-    Product("2", "Pokemon Card Collection 2", R.drawable.cards_3,45,"Cards"),
-    Product("3", "Pokemon Card Collection 3", R.drawable.cards_2,60,"Cards"),
-    Product("4", "Pokemon Card Collection 4", R.drawable.cards_5,65,"Cards"),
-    Product("5", "Pokemon Card Collection 5", R.drawable.cards_4,65,"Cards"),
+    Product("1", "Pokemon Card Set Blue Edition", R.drawable.pokemon_cards,50,"Cards"),
+    Product("2", "Pokemon Card Set Ocean Edition", R.drawable.cards_3,45,"Cards"),
+    Product("3", "Pokemon Card Set Nature Edition", R.drawable.cards_2,60,"Cards"),
+    Product("4", "Poker Card Pack All Black Edition", R.drawable.cards_5,65,"Cards"),
+    Product("5", "Poker Card Pack Black and Silver Edition ", R.drawable.cards_4,65,"Cards"),
 
-    Product("6", "Real Madrid", R.drawable.rm_signed,200,"Signed Jerseys"),
-    Product("7", "Real Madrid", R.drawable.rm_signed_1,200,"Signed Jerseys"),
-    Product("8", "Manchester United", R.drawable.manutd_signed_1,150,"Signed Jerseys"),
-    Product("9", "Manchester United", R.drawable.manutd_signed_2,150,"Signed Jerseys"),
-    Product("10", "Juventus", R.drawable.juventus_signed,100,"Signed Jerseys"),
+    Product("6", "Real Madrid 2015", R.drawable.rm_signed,200,"Signed Jerseys"),
+    Product("7", "Real Madrid 2017", R.drawable.rm_signed_1,200,"Signed Jerseys"),
+    Product("8", "Manchester United 2000", R.drawable.manutd_signed_1,150,"Signed Jerseys"),
+    Product("9", "Manchester United 1999", R.drawable.manutd_signed_2,150,"Signed Jerseys"),
+    Product("10", "Juventus 2016", R.drawable.juventus_signed,100,"Signed Jerseys"),
 
 
-    Product("11", "Real Madrid", R.drawable.rm_vintage,180,"Vintage Jerseys"),
-    Product("12", "Real Madrid", R.drawable.rm_vintage_1,180,"Vintage Jerseys"),
-    Product("13", "Real Madrid", R.drawable.rm_vintage_2,180,"Vintage Jerseys"),
-    Product("14", "Real Madrid", R.drawable.rm_vintage_3,180,"Vintage Jerseys"),
-    Product("15", "Manchester United", R.drawable.manutd_vintage,50,"Vintage Jerseys"),
+    Product("11", "Real Madrid 2005 Home", R.drawable.rm_vintage,180,"Vintage Jerseys"),
+    Product("12", "Real Madrid 2006 Away", R.drawable.rm_vintage_1,180,"Vintage Jerseys"),
+    Product("13", "Real Madrid 2010 Home", R.drawable.rm_vintage_2,180,"Vintage Jerseys"),
+    Product("14", "Real Madrid 2011 Away", R.drawable.rm_vintage_3,180,"Vintage Jerseys"),
+    Product("15", "Manchester United 1998 Home", R.drawable.manutd_vintage,50,"Vintage Jerseys"),
 
     Product("16", "Retro Watch", R.drawable.smartwatch,80,"Vintage Devices"),
     Product("17", "Vintage Camera", R.drawable.retro_camera,100,"Vintage Devices"),
