@@ -54,6 +54,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.rememberAsyncImagePainter
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -102,7 +103,19 @@ fun UserProfileScreen(navController: NavHostController) {
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("User Profile") })
+            TopAppBar(
+                title = { Text("User Profile") },
+                actions = {
+                    TextButton(onClick = {
+                        FirebaseAuth.getInstance().signOut()
+                        navController.navigate("login") {
+                            popUpTo("login") { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }) {
+                        Text("Logout")
+                    }
+                })
         },
         bottomBar = {
             BottomNavigationBar(navController,currentRoute)
