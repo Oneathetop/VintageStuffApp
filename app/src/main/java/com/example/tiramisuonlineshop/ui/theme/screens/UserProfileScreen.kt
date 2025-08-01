@@ -229,10 +229,6 @@ fun UserProfileScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(36.dp))
 
-            Button(onClick = {navController.navigate("Login")}) {
-                Text("Logout")
-            }
-
             if (showError) {
                 AlertDialog(
                     onDismissRequest = { showError = false },
