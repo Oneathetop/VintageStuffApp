@@ -51,6 +51,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.rememberAsyncImagePainter
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import kotlinx.coroutines.launch
@@ -69,6 +70,8 @@ fun UserProfileScreen(navController: NavHostController) {
     val scrollState = rememberScrollState()
     var showError by remember { mutableStateOf(false) }
     var showConfirmationCard by remember { mutableStateOf(false) }
+    val navBackStackEntry = navController.currentBackStackEntryAsState().value
+    val currentRoute = navBackStackEntry?.destination?.route
 
     val context = LocalContext.current
 
@@ -102,7 +105,7 @@ fun UserProfileScreen(navController: NavHostController) {
             TopAppBar(title = { Text("User Profile") })
         },
         bottomBar = {
-            BottomNavigationBar(navController)
+            BottomNavigationBar(navController,currentRoute)
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
@@ -114,7 +117,7 @@ fun UserProfileScreen(navController: NavHostController) {
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // 📸 Profile Image Display
+            //  Profile Image Display
             Box(
                 modifier = Modifier
                     .size(120.dp)

@@ -41,6 +41,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.rememberAsyncImagePainter
 import com.example.tiramisuonlineshop.R
 import com.example.tiramisuonlineshop.model.Product
@@ -114,7 +115,8 @@ fun HomeScreen(navController: NavHostController) {
     val filteredProducts = sampleProducts.filter {
         it.name.contains(searchQuery, ignoreCase = true)
     }
-
+    val navBackStackEntry = navController.currentBackStackEntryAsState().value
+    val currentRoute = navBackStackEntry?.destination?.route
 
 
     Scaffold(
@@ -140,7 +142,7 @@ fun HomeScreen(navController: NavHostController) {
             )
         },
         bottomBar = {
-            BottomNavigationBar(navController)
+            BottomNavigationBar(navController,currentRoute)
         }
     ) { padding ->
 

@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.rememberAsyncImagePainter
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.example.tiramisuonlineshop.ui.theme.CartManager
@@ -58,6 +59,8 @@ fun ProductDetailsScreen(productId: String, navController: NavHostController) {
     val bounceAnim = remember { Animatable(1f) }
     var convertedPrice by remember { mutableStateOf<String?>(null) }
     var isLoadingConversion by remember { mutableStateOf(true) }
+    val navBackStackEntry = navController.currentBackStackEntryAsState().value
+    val currentRoute = navBackStackEntry?.destination?.route
 
     Scaffold(
         topBar = {
@@ -71,7 +74,7 @@ fun ProductDetailsScreen(productId: String, navController: NavHostController) {
             )
         },
         bottomBar = {
-            BottomNavigationBar(navController)
+            BottomNavigationBar(navController,currentRoute)
         }
     ) { padding ->
 

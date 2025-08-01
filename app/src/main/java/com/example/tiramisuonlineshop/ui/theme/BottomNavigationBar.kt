@@ -1,8 +1,8 @@
 package com.example.tiramisuonlineshop.ui.theme
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
@@ -14,29 +14,45 @@ import androidx.navigation.NavHostController
 
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
+fun BottomNavigationBar(navController: NavHostController,currentRoute: String?) {
     NavigationBar {
         NavigationBarItem(
-            selected = false,
-            onClick = { navController.navigate("home") },
+            selected = currentRoute == "home",
+            onClick = { navController.navigate("home"){
+                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
+            } },
             label = { Text("Home") },
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
         )
         NavigationBarItem(
-            selected = false,
-            onClick = { navController.navigate("cart") },
+            selected = currentRoute == "cart",
+            onClick = { navController.navigate("cart"){
+                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
+            } },
             label = { Text("Cart") },
             icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Cart") }
         )
         NavigationBarItem(
-            selected = false,
-            onClick = { navController.navigate("login") },
-            label = { Text("Logout") },
-            icon = {Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Logout")}
+            selected = currentRoute == "map",
+            onClick = { navController.navigate("map") {
+                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
+            } },
+            label = { Text("Location") },
+            icon = {Icon(Icons.Filled.Map, contentDescription = "Location")}
         )
         NavigationBarItem(
-            selected = false,
-            onClick = { navController.navigate("profile") },
+            selected = currentRoute == "profile",
+            onClick = { navController.navigate("profile") {
+                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
+            } },
             label = { Text("Profile") },
             icon = { Icon(Icons.Default.Person, contentDescription = "Profile") }
         )
