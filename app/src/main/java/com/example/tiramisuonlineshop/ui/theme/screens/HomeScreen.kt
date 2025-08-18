@@ -38,47 +38,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.rememberAsyncImagePainter
-import com.example.tiramisuonlineshop.R
+import com.example.tiramisuonlineshop.model.Datasource
 import com.example.tiramisuonlineshop.model.Product
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.example.tiramisuonlineshop.ui.theme.ThemeManager
 
-
-val sampleProducts = listOf(
-    Product("1", "Pokemon Card Set Blue Edition", R.drawable.pokemon_cards,50,"Cards"),
-    Product("2", "Pokemon Card Set Ocean Edition", R.drawable.cards_3,45,"Cards"),
-    Product("3", "Pokemon Card Set Nature Edition", R.drawable.cards_2,60,"Cards"),
-    Product("4", "Poker Card Pack All Black Edition", R.drawable.cards_5,65,"Cards"),
-    Product("5", "Poker Card Pack Black and Silver Edition ", R.drawable.cards_4,65,"Cards"),
-
-    Product("6", "Real Madrid 2015", R.drawable.rm_signed,200,"Signed Jerseys"),
-    Product("7", "Real Madrid 2017", R.drawable.rm_signed_1,200,"Signed Jerseys"),
-    Product("8", "Man United 2000", R.drawable.manutd_signed_1,150,"Signed Jerseys"),
-    Product("9", "Man United 1999", R.drawable.manutd_signed_2,150,"Signed Jerseys"),
-    Product("10", "Juventus 2016", R.drawable.juventus_signed,100,"Signed Jerseys"),
-
-
-    Product("11", "Real Madrid 2005 Home", R.drawable.rm_vintage,180,"Vintage Jerseys"),
-    Product("12", "Real Madrid 2006 Away", R.drawable.rm_vintage_1,180,"Vintage Jerseys"),
-    Product("13", "Real Madrid 2010 Home", R.drawable.rm_vintage_2,180,"Vintage Jerseys"),
-    Product("14", "Real Madrid 2011 Away", R.drawable.rm_vintage_3,180,"Vintage Jerseys"),
-    Product("15", "Man United 1998 Home", R.drawable.manutd_vintage,50,"Vintage Jerseys"),
-
-    Product("16", "Retro Watch", R.drawable.smartwatch,80,"Vintage Devices"),
-    Product("17", "Vintage Camera", R.drawable.retro_camera,100,"Vintage Devices"),
-    Product("18", "Game boy", R.drawable.gameboy,70,"Vintage Devices"),
-    Product("19", "Gaming Cartridge", R.drawable.gaming_cartridge,50,"Vintage Devices"),
-
-)
-
 @Composable
 fun ProductCard(product: Product, onClick: () -> Unit) {
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -110,7 +82,11 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
+
 fun HomeScreen(navController: NavHostController) {
+    val context = LocalContext.current
+    val datasource = Datasource()
+    val sampleProducts = datasource.loadProducts(context, "items.json")
     var searchQuery by remember { mutableStateOf("") }
     val filteredProducts = sampleProducts.filter {
         it.name.contains(searchQuery, ignoreCase = true)
@@ -196,7 +172,6 @@ fun HomeScreen(navController: NavHostController) {
                     }
                 }
 
-                //
             }
         }
     }

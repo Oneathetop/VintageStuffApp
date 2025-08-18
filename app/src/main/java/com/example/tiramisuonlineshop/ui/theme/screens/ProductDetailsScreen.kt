@@ -36,10 +36,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.rememberAsyncImagePainter
+import com.example.tiramisuonlineshop.model.Datasource
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.example.tiramisuonlineshop.ui.theme.CartManager
 import kotlinx.coroutines.Dispatchers
@@ -52,6 +54,9 @@ import java.net.URL
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailsScreen(productId: String, navController: NavHostController) {
+    val context = LocalContext.current
+    val datasource = Datasource()
+    val sampleProducts = datasource.loadProducts(context, "items.json")
     val product = sampleProducts.find { it.id == productId }
 
     var quantity by remember { mutableIntStateOf(1) }
