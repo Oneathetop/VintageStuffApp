@@ -32,6 +32,7 @@ class MainActivity : ComponentActivity() {
         // 🔐 Ask for location permission on launch
         locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
 
+
         setContent {
             AppTheme {
                 Surface(

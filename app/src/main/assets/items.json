@@ -1,0 +1,136 @@
+[
+  {
+    "id": "1",
+    "name": "Pokemon Card Set Blue Edition",
+    "imageResId": "pokemon_cards",
+    "price":50,
+    "category": "Cards"
+
+  },
+  {
+    "id": "2",
+    "name": "Pokemon Card Set Ocean Edition",
+    "imageResId": "cards_3",
+    "price":45,
+    "category":"Cards"
+  },
+  {
+    "id": "3",
+    "name": "Pokemon Card Set Nature Edition",
+    "imageResId": "cards_2",
+    "price":60,
+    "category":"Cards"
+  },
+  {
+    "id": "4",
+    "name": "Poker Card Pack All Black Edition",
+    "imageResId": "cards_5",
+    "price":65,
+    "category":"Cards"
+  },
+  {
+    "id": "5",
+    "name": "Poker Card Pack Black and Silver Edition",
+    "imageResId": "cards_4",
+    "price":65,
+    "category":"Cards"
+  },
+  {
+    "id": "6",
+    "name": "Real Madrid 2015",
+    "imageResId": "rm_signed",
+    "price":200,
+    "category":"Signed Jerseys"
+  },
+  {
+    "id": "7",
+    "name": "Real Madrid 2017",
+    "imageResId": "rm_signed_1",
+    "price":200,
+    "category":"Signed Jerseys"
+  },
+  {
+    "id": "8",
+    "name": "Man United 2000",
+    "imageResId": "manutd_signed_1",
+    "price":150,
+    "category":"Signed Jerseys"
+  },
+  {
+    "id": "9",
+    "name": "Man United 1999",
+    "imageResId": "manutd_signed_2",
+    "price":150,
+    "category":"Signed Jerseys"
+  },
+  {
+    "id": "10",
+    "name": "Juventus 2016",
+    "imageResId": "juventus_signed",
+    "price":100,
+    "category":"Signed Jerseys"
+  },
+  {
+    "id": "11",
+    "name": "Real Madrid 2005 Home",
+    "imageResId": "rm_vintage",
+    "price":180,
+    "category":"Vintage Jerseys"
+  },
+  {
+    "id": "12",
+    "name": "Real Madrid 2006 Away",
+    "imageResId": "rm_vintage_1",
+    "price":180,
+    "category":"Vintage Jerseys"
+  },
+  {
+    "id": "13",
+    "name": "Real Madrid 2010 Home",
+    "imageResId": "rm_vintage_2",
+    "price":180,
+    "category":"Vintage Jerseys"
+  },
+  {
+    "id": "14",
+    "name": "Real Madrid 2011 Away",
+    "imageResId": "rm_vintage_3",
+    "price":180,
+    "category":"Vintage Jerseys"
+  },
+  {
+    "id": "15",
+    "name": "Man United 1998 Home",
+    "imageResId": "manutd_vintage",
+    "price":50,
+    "category":"Vintage Jerseys"
+  },
+  {
+    "id": "16",
+    "name": "Retro Watch",
+    "imageResId": "smartwatch",
+    "price":80,
+    "category":"Vintage Devices"
+  },
+  {
+    "id": "17",
+    "name": "Vintage Camera",
+    "imageResId": "retro_camera",
+    "price":100,
+    "category":"Vintage Devices"
+  },
+  {
+    "id": "18",
+    "name": "Game boy",
+    "imageResId": "gameboy",
+    "price":70,
+    "category":"Vintage Devices"
+  },
+  {
+    "id": "19",
+    "name": "Gaming Cartridge",
+    "imageResId": "gaming_cartridge",
+    "price":50,
+    "category":"Vintage Devices"
+  }
+]
