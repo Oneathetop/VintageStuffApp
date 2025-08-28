@@ -17,6 +17,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
+//Google Maps API Key: AIzaSyDFy1_6W3VGB8DWn-mTP1Uo8HTmpN1PKxQ
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
