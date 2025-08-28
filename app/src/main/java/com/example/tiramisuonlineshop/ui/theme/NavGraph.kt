@@ -24,6 +24,7 @@ fun AppNavGraph(navController: NavHostController) {
         composable("details/{productId}") { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId") ?: ""
             ProductDetailsScreen(productId = productId, navController = navController)
+            //ProductDetailsScreen(productId = productId, navController = navController)
         }
         composable("cart") { CartScreen(navController) }
         composable("profile") { UserProfileScreen(navController) }
