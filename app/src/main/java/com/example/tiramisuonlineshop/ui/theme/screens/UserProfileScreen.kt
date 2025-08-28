@@ -3,6 +3,7 @@ package com.example.tiramisuonlineshop.ui.theme.screens
 import android.Manifest
 import android.content.res.Configuration
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
@@ -58,6 +59,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.rememberAsyncImagePainter
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,7 +78,7 @@ fun UserProfileScreen(navController: NavHostController) {
     var showConfirmationCard by remember { mutableStateOf(false) }
     val navBackStackEntry = navController.currentBackStackEntryAsState().value
     val currentRoute = navBackStackEntry?.destination?.route
-
+    var firestoreName by remember { mutableStateOf("Loading...") }
     val context = LocalContext.current
 
     // Launcher to capture camera image
@@ -104,10 +106,27 @@ fun UserProfileScreen(navController: NavHostController) {
         }
     }
 
+    val db = FirebaseFirestore.getInstance()
+    val user = FirebaseAuth.getInstance().currentUser
+
+    user?.let {
+        db.collection("users").document(it.uid).get()
+            .addOnSuccessListener { document ->
+                firestoreName = document?.getString("Full Name") ?: "No name found"
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error fetching user data", e)
+                firestoreName = "Error loading name"
+            }
+    }
+
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("User Profile") },
+
+                title = { Text("Welcome, $firestoreName", style = MaterialTheme.typography.titleMedium,
+                    modifier=Modifier.padding(top = 16.dp)) },
                 actions = {
                     TextButton(onClick = {
                         FirebaseAuth.getInstance().signOut()
