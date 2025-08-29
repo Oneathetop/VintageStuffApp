@@ -10,11 +10,19 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun BottomNavigationBar(navController: NavHostController,currentRoute: String?) {
+    val locationPermissionState = rememberPermissionState(android.Manifest.permission.ACCESS_FINE_LOCATION)
+
+    val context = LocalContext.current
     NavigationBar {
         NavigationBarItem(
             selected = currentRoute == "home",
@@ -37,12 +45,21 @@ fun BottomNavigationBar(navController: NavHostController,currentRoute: String?) 
             icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Cart") }
         )
         NavigationBarItem(
+
             selected = currentRoute == "map",
-            onClick = { navController.navigate("map") {
-                popUpTo(navController.graph.startDestinationId) { saveState = true }
-                launchSingleTop = true
-                restoreState = true
-            } },
+            onClick = {
+                if (locationPermissionState.status.isGranted) {
+                    // Permission granted → navigate to map
+                    navController.navigate("map") {
+                        popUpTo(navController.graph.startDestinationId) { saveState = true }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                } else {
+                    // Request permission
+                    locationPermissionState.launchPermissionRequest()
+                }
+            },
             label = { Text("Location") },
             icon = {Icon(Icons.Filled.Map, contentDescription = "Location")}
         )

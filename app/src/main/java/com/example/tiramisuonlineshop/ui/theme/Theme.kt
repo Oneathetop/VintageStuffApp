@@ -1,19 +1,228 @@
 package com.example.tiramisuonlineshop.ui.theme
-import android.app.Activity
+
+
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.Typography
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-
+import backgroundDark
+import backgroundDarkHighContrast
+import backgroundDarkMediumContrast
+import backgroundLight
+import backgroundLightHighContrast
+import backgroundLightMediumContrast
+import com.example.ui.theme.AppTypography
+import errorContainerDark
+import errorContainerDarkHighContrast
+import errorContainerDarkMediumContrast
+import errorContainerLight
+import errorContainerLightHighContrast
+import errorContainerLightMediumContrast
+import errorDark
+import errorDarkHighContrast
+import errorDarkMediumContrast
+import errorLight
+import errorLightHighContrast
+import errorLightMediumContrast
+import inverseOnSurfaceDark
+import inverseOnSurfaceDarkHighContrast
+import inverseOnSurfaceDarkMediumContrast
+import inverseOnSurfaceLight
+import inverseOnSurfaceLightHighContrast
+import inverseOnSurfaceLightMediumContrast
+import inversePrimaryDark
+import inversePrimaryDarkHighContrast
+import inversePrimaryDarkMediumContrast
+import inversePrimaryLight
+import inversePrimaryLightHighContrast
+import inversePrimaryLightMediumContrast
+import inverseSurfaceDark
+import inverseSurfaceDarkHighContrast
+import inverseSurfaceDarkMediumContrast
+import inverseSurfaceLight
+import inverseSurfaceLightHighContrast
+import inverseSurfaceLightMediumContrast
+import onBackgroundDark
+import onBackgroundDarkHighContrast
+import onBackgroundDarkMediumContrast
+import onBackgroundLight
+import onBackgroundLightHighContrast
+import onBackgroundLightMediumContrast
+import onErrorContainerDark
+import onErrorContainerDarkHighContrast
+import onErrorContainerDarkMediumContrast
+import onErrorContainerLight
+import onErrorContainerLightHighContrast
+import onErrorContainerLightMediumContrast
+import onErrorDark
+import onErrorDarkHighContrast
+import onErrorDarkMediumContrast
+import onErrorLight
+import onErrorLightHighContrast
+import onErrorLightMediumContrast
+import onPrimaryContainerDark
+import onPrimaryContainerDarkHighContrast
+import onPrimaryContainerDarkMediumContrast
+import onPrimaryContainerLight
+import onPrimaryContainerLightHighContrast
+import onPrimaryContainerLightMediumContrast
+import onPrimaryDark
+import onPrimaryDarkHighContrast
+import onPrimaryDarkMediumContrast
+import onPrimaryLight
+import onPrimaryLightHighContrast
+import onPrimaryLightMediumContrast
+import onSecondaryContainerDark
+import onSecondaryContainerDarkHighContrast
+import onSecondaryContainerDarkMediumContrast
+import onSecondaryContainerLight
+import onSecondaryContainerLightHighContrast
+import onSecondaryContainerLightMediumContrast
+import onSecondaryDark
+import onSecondaryDarkHighContrast
+import onSecondaryDarkMediumContrast
+import onSecondaryLight
+import onSecondaryLightHighContrast
+import onSecondaryLightMediumContrast
+import onSurfaceDark
+import onSurfaceDarkHighContrast
+import onSurfaceDarkMediumContrast
+import onSurfaceLight
+import onSurfaceLightHighContrast
+import onSurfaceLightMediumContrast
+import onSurfaceVariantDark
+import onSurfaceVariantDarkHighContrast
+import onSurfaceVariantDarkMediumContrast
+import onSurfaceVariantLight
+import onSurfaceVariantLightHighContrast
+import onSurfaceVariantLightMediumContrast
+import onTertiaryContainerDark
+import onTertiaryContainerDarkHighContrast
+import onTertiaryContainerDarkMediumContrast
+import onTertiaryContainerLight
+import onTertiaryContainerLightHighContrast
+import onTertiaryContainerLightMediumContrast
+import onTertiaryDark
+import onTertiaryDarkHighContrast
+import onTertiaryDarkMediumContrast
+import onTertiaryLight
+import onTertiaryLightHighContrast
+import onTertiaryLightMediumContrast
+import outlineDark
+import outlineDarkHighContrast
+import outlineDarkMediumContrast
+import outlineLight
+import outlineLightHighContrast
+import outlineLightMediumContrast
+import outlineVariantDark
+import outlineVariantDarkHighContrast
+import outlineVariantDarkMediumContrast
+import outlineVariantLight
+import outlineVariantLightHighContrast
+import outlineVariantLightMediumContrast
+import primaryContainerDark
+import primaryContainerDarkHighContrast
+import primaryContainerDarkMediumContrast
+import primaryContainerLight
+import primaryContainerLightHighContrast
+import primaryContainerLightMediumContrast
+import primaryDark
+import primaryDarkHighContrast
+import primaryDarkMediumContrast
+import primaryLight
+import primaryLightHighContrast
+import primaryLightMediumContrast
+import scrimDark
+import scrimDarkHighContrast
+import scrimDarkMediumContrast
+import scrimLight
+import scrimLightHighContrast
+import scrimLightMediumContrast
+import secondaryContainerDark
+import secondaryContainerDarkHighContrast
+import secondaryContainerDarkMediumContrast
+import secondaryContainerLight
+import secondaryContainerLightHighContrast
+import secondaryContainerLightMediumContrast
+import secondaryDark
+import secondaryDarkHighContrast
+import secondaryDarkMediumContrast
+import secondaryLight
+import secondaryLightHighContrast
+import secondaryLightMediumContrast
+import surfaceBrightDark
+import surfaceBrightDarkHighContrast
+import surfaceBrightDarkMediumContrast
+import surfaceBrightLight
+import surfaceBrightLightHighContrast
+import surfaceBrightLightMediumContrast
+import surfaceContainerDark
+import surfaceContainerDarkHighContrast
+import surfaceContainerDarkMediumContrast
+import surfaceContainerHighDark
+import surfaceContainerHighDarkHighContrast
+import surfaceContainerHighDarkMediumContrast
+import surfaceContainerHighLight
+import surfaceContainerHighLightHighContrast
+import surfaceContainerHighLightMediumContrast
+import surfaceContainerHighestDark
+import surfaceContainerHighestDarkHighContrast
+import surfaceContainerHighestDarkMediumContrast
+import surfaceContainerHighestLight
+import surfaceContainerHighestLightHighContrast
+import surfaceContainerHighestLightMediumContrast
+import surfaceContainerLight
+import surfaceContainerLightHighContrast
+import surfaceContainerLightMediumContrast
+import surfaceContainerLowDark
+import surfaceContainerLowDarkHighContrast
+import surfaceContainerLowDarkMediumContrast
+import surfaceContainerLowLight
+import surfaceContainerLowLightHighContrast
+import surfaceContainerLowLightMediumContrast
+import surfaceContainerLowestDark
+import surfaceContainerLowestDarkHighContrast
+import surfaceContainerLowestDarkMediumContrast
+import surfaceContainerLowestLight
+import surfaceContainerLowestLightHighContrast
+import surfaceContainerLowestLightMediumContrast
+import surfaceDark
+import surfaceDarkHighContrast
+import surfaceDarkMediumContrast
+import surfaceDimDark
+import surfaceDimDarkHighContrast
+import surfaceDimDarkMediumContrast
+import surfaceDimLight
+import surfaceDimLightHighContrast
+import surfaceDimLightMediumContrast
+import surfaceLight
+import surfaceLightHighContrast
+import surfaceLightMediumContrast
+import surfaceVariantDark
+import surfaceVariantDarkHighContrast
+import surfaceVariantDarkMediumContrast
+import surfaceVariantLight
+import surfaceVariantLightHighContrast
+import surfaceVariantLightMediumContrast
+import tertiaryContainerDark
+import tertiaryContainerDarkHighContrast
+import tertiaryContainerDarkMediumContrast
+import tertiaryContainerLight
+import tertiaryContainerLightHighContrast
+import tertiaryContainerLightMediumContrast
+import tertiaryDark
+import tertiaryDarkHighContrast
+import tertiaryDarkMediumContrast
+import tertiaryLight
+import tertiaryLightHighContrast
+import tertiaryLightMediumContrast
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -255,45 +464,26 @@ val unspecified_scheme = ColorFamily(
     Color.Unspecified, Color.Unspecified, Color.Unspecified, Color.Unspecified
 )
 
-
-private val customLightScheme = lightColorScheme(
-    primary = Color(0xFF8B5E3C),              
-    onPrimary = Color.White,
-    primaryContainer = Color(0xFFEEDDC8),     
-    onPrimaryContainer = Color(0xFF4A2C14),
-
-    secondary = Color(0xFFD7B49E),            
-    onSecondary = Color(0xFF3E2F25),
-    secondaryContainer = Color(0xFFFFE8D0),
-    onSecondaryContainer = Color(0xFF3E2F25),
-
-    background = Color(0xFFFFFAF0),           
-    onBackground = Color(0xFF3B2F2A),
-
-    surface = Color(0xFFFFFBF5),             
-    onSurface = Color(0xFF3B2F2A),
-
-    error = Color(0xFFB00020),
-    onError = Color.White
-)
-
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = ThemeManager.isDarkMode.value, 
-    content: @Composable () -> Unit
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    // Dynamic color is available on Android 12+
+    dynamicColor: Boolean = true,
+    content: @Composable() () -> Unit
 ) {
-    val colorScheme = if (darkTheme) {
-        
-        darkColorScheme()
-    } else {
-        lightScheme 
-    }
+  val colorScheme = when {
+      dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+          val context = LocalContext.current
+          if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+      }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = AppTypography,
-        content = content
-    )
+      darkTheme -> darkScheme
+      else -> lightScheme
+  }
+
+  MaterialTheme(
+    colorScheme = colorScheme,
+    typography = AppTypography,
+    content = content
+  )
 }
-
-
