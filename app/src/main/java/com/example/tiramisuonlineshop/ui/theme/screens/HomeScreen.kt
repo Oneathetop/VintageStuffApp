@@ -253,7 +253,8 @@ fun HomeScreen(navController: NavHostController) {
                 title = {
                     Text(
                         text="Home",
-                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                        style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
+                        //style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
                         ) },
 
                 actions = {

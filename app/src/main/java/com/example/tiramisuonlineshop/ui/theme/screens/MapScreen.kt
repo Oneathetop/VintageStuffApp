@@ -12,6 +12,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
+import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
@@ -24,14 +25,17 @@ import com.google.android.gms.maps.model.MarkerOptions
 fun GoogleMapScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Store Locations") },
+            TopAppBar(
+                title = { Text("Store Locations") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
-                })
-        }
-    ) {
+                },
+            )
+        },
+        bottomBar ={ BottomNavigationBar(navController = navController, currentRoute = "google_map")}
+    ) { innerPadding ->
         AndroidView(factory = { context ->
             MapView(context).apply {
                 onCreate(null)
