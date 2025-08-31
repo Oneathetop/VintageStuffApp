@@ -1,6 +1,7 @@
 package com.example.tiramisuonlineshop.ui.theme.screens
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.net.Uri
 import android.util.Log
@@ -44,6 +45,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -54,6 +56,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.rememberAsyncImagePainter
@@ -62,10 +65,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
+@SuppressLint("UseKtx")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserProfileScreen(navController: NavHostController) {
-    var profileImageUri by remember { mutableStateOf<Uri?>(null) } // Holds captured image URI
+    val uriSaver = listSaver<Uri?, String>(
+        save = { listOf(it.toString()) },
+        restore = { if (it.isNotEmpty()) it[0].toUri() else null }
+    )
+    var profileImageUri by rememberSaveable(stateSaver = uriSaver) {mutableStateOf<Uri?>(null)}  // Holds captured image URI
     var fullName by rememberSaveable { mutableStateOf("") }
     var phoneNumber by rememberSaveable { mutableStateOf("") }
     var address by rememberSaveable { mutableStateOf("") }
