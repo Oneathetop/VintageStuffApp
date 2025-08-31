@@ -128,7 +128,7 @@ fun LoginScreen(navController: NavHostController) {
                                 if (task.isSuccessful) {
                                     Toast.makeText(context, "Login successful!", Toast.LENGTH_SHORT)
                                         .show()
-                                    navController.navigate("home")
+                                    navController.navigate("loginAnimation")
                                 } else {
                                     Toast.makeText(
                                         context,
@@ -162,8 +162,7 @@ fun LoginScreen(navController: NavHostController) {
             ) {
                 Text(
                     "No account? Register",
-                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                    color = colorResource(id = com.example.tiramisuonlineshop.R.color.white)
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                 )
             }
         }

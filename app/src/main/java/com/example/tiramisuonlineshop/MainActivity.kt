@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.tiramisuonlineshop.ui.theme.AppNavGraph
 import com.example.tiramisuonlineshop.ui.theme.AppTheme
+import com.example.tiramisuonlineshop.ui.theme.ThemeManager
 import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-            AppTheme {
+            AppTheme(darkTheme = ThemeManager.isDarkMode.value) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
