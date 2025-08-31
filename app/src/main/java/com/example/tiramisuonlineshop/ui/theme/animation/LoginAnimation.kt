@@ -1,5 +1,7 @@
 package com.example.tiramisuonlineshop.ui.theme.animation
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
@@ -24,12 +26,13 @@ fun BrightenAnimationScreen(
 
     // Animate circle radius
     val radius by animateFloatAsState(
-        targetValue = when{startFadeOut -> 500f
+        targetValue = when{startFadeOut -> 400f
         startAnimation -> 2000f
         else -> 1f
         }, // expand outward
         animationSpec = androidx.compose.animation.core.tween(
-            durationMillis = if (startFadeOut) 800 else 2000
+            durationMillis = if (startFadeOut) 1400 else 2000,
+            easing = FastOutSlowInEasing
         ),
         finishedListener = {
             if (startFadeOut) {
@@ -45,7 +48,9 @@ fun BrightenAnimationScreen(
         targetValue = if (startFadeOut)  0f else 1f,
 
         animationSpec = androidx.compose.animation.core.tween(
-            durationMillis = if (startFadeOut) 800 else 2000)
+            durationMillis = if (startFadeOut) 1400 else 2000,
+            easing = LinearOutSlowInEasing
+        )
 
     )
 

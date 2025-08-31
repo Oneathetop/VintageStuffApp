@@ -39,11 +39,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import coil.compose.rememberAsyncImagePainter
 import com.example.tiramisuonlineshop.R.drawable.cards_2
 import com.example.tiramisuonlineshop.R.drawable.cards_3
 import com.example.tiramisuonlineshop.R.drawable.cards_4
@@ -79,7 +79,7 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
         Column (modifier = Modifier.width(240.dp)){
             Image(
                 //painter = painterResource(id = product.imageResId),
-                painter = rememberAsyncImagePainter(product.imageResId),
+                painter = painterResource(product.imageResId),
                 contentDescription = product.name,
                 modifier = Modifier
                     .fillMaxWidth()
