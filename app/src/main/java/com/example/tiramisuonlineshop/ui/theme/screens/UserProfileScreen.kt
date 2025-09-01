@@ -54,6 +54,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -133,7 +134,8 @@ fun UserProfileScreen(navController: NavHostController) {
         topBar = {
             TopAppBar(
 
-                title = { Text("Welcome, $firestoreName", style = MaterialTheme.typography.titleMedium,
+                title = { Text("Welcome, $firestoreName", style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                    //style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
                     modifier=Modifier.padding(top = 16.dp)) },
                 actions = {
                     TextButton(onClick = {

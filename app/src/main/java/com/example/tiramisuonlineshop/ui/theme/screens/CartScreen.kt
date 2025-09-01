@@ -1,4 +1,4 @@
-package com.example.tiramisuonlineshop.ui
+package com.example.tiramisuonlineshop.ui.theme.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -37,7 +38,8 @@ fun CartScreen(navController: NavHostController) {
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Cart") })
+            TopAppBar(title = {
+                Text("Cart", style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)) })
         },
         bottomBar = {
             BottomNavigationBar(navController, currentRoute)

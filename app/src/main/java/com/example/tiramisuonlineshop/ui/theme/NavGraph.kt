@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.tiramisuonlineshop.ui.CartScreen
+import com.example.tiramisuonlineshop.ui.theme.screens.CartScreen
 import com.example.tiramisuonlineshop.ui.theme.animation.BrightenAnimationScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.GoogleMapScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.HomeScreen
