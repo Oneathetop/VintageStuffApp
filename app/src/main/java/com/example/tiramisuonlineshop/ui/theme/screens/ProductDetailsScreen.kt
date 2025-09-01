@@ -37,10 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import coil.compose.rememberAsyncImagePainter
 import com.example.tiramisuonlineshop.model.Datasource
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.example.tiramisuonlineshop.ui.theme.CartManager
@@ -109,7 +109,7 @@ fun ProductDetailsScreen(productId: String, navController: NavHostController) {
                     .verticalScroll(rememberScrollState())
             ) {
                 Image(
-                    painter = rememberAsyncImagePainter(product.imageResId),
+                    painter = painterResource(product.getImageResId(context)),
                     contentDescription = product.name,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
