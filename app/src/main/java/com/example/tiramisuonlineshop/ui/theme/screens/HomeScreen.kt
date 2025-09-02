@@ -1,6 +1,8 @@
 package com.example.tiramisuonlineshop.ui.theme.screens
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,11 +21,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -59,9 +63,8 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
             .clickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Column (modifier = Modifier.width(240.dp)){
+        Column(modifier = Modifier.width(240.dp)) {
             Image(
-                //painter = painterResource(id = product.imageResId),
                 painter = painterResource(product.getImageResId(context)),
                 contentDescription = product.name,
                 modifier = Modifier
@@ -81,9 +84,7 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @OptIn(ExperimentalMaterial3Api::class)
-
 @Composable
-
 fun HomeScreen(navController: NavHostController) {
     val context = LocalContext.current
 
@@ -96,17 +97,15 @@ fun HomeScreen(navController: NavHostController) {
     val navBackStackEntry = navController.currentBackStackEntryAsState().value
     val currentRoute = navBackStackEntry?.destination?.route
 
-
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text="Home",
+                        text = "Home",
                         style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-                        //style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-                        ) },
-
+                    )
+                },
                 actions = {
                     IconButton(onClick = { ThemeManager.toggleTheme() }) {
                         Icon(
@@ -121,7 +120,22 @@ fun HomeScreen(navController: NavHostController) {
             )
         },
         bottomBar = {
-            BottomNavigationBar(navController,currentRoute)
+            BottomNavigationBar(navController, currentRoute)
+        },
+        floatingActionButton = {   // ✅ Floating Call Button
+            FloatingActionButton(
+                onClick = {
+                    val intent = Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:0771234567") // Replace with your store number
+                    }
+                    context.startActivity(intent)
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Call,
+                    contentDescription = "Call Store"
+                )
+            }
         }
     ) { padding ->
 
@@ -149,7 +163,6 @@ fun HomeScreen(navController: NavHostController) {
                     )
                 }
 
-                //
                 val categorized = filteredProducts.groupBy { it.category }
 
                 categorized.forEach { (category, itemsInCategory) ->
@@ -165,7 +178,7 @@ fun HomeScreen(navController: NavHostController) {
                             contentPadding = PaddingValues(horizontal = 16.dp)
                         ) {
                             items(itemsInCategory) { product ->
-                                Box{
+                                Box {
                                     ProductCard(product = product) {
                                         navController.navigate("details/${product.id}")
                                     }
@@ -174,10 +187,7 @@ fun HomeScreen(navController: NavHostController) {
                         }
                     }
                 }
-
             }
         }
     }
 }
-
-
