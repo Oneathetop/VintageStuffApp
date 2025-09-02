@@ -39,7 +39,9 @@ fun CartScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(title = {
-                Text("Cart", style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)) })
+                Text("Cart",
+                    style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)
+                ) })
         },
         bottomBar = {
             BottomNavigationBar(navController, currentRoute)

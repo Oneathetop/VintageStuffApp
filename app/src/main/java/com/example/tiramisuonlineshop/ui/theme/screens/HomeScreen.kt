@@ -35,12 +35,14 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -101,10 +103,11 @@ fun HomeScreen(navController: NavHostController) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        text = "Home",
-                        style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-                    )
+                        Text(
+                            text = "Home",
+                            style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
+                            color = Color.White
+                        )
                 },
                 actions = {
                     IconButton(onClick = { ThemeManager.toggleTheme() }) {
@@ -113,10 +116,16 @@ fun HomeScreen(navController: NavHostController) {
                                 Icons.Default.LightMode
                             else
                                 Icons.Default.DarkMode,
-                            contentDescription = "Toggle Theme"
+                            contentDescription = "Toggle Theme",
+                            tint = Color.White
+
                         )
                     }
-                }
+
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF5565E1) // fixed background color
+                )
             )
         },
         bottomBar = {
