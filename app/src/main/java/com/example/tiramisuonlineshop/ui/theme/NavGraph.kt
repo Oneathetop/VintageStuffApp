@@ -22,7 +22,9 @@ import com.example.tiramisuonlineshop.ui.theme.screens.UserProfileScreen
 fun AppNavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = "login") {
         composable("register") { RegisterScreen(navController) }
-        composable("login") { LoginScreen(navController) }
+        composable("login") { ConnectivityHandler(navController = navController) {
+            LoginScreen(navController)
+        } }
         composable("loginAnimation")
         {
             BrightenAnimationScreen {

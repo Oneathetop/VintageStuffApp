@@ -14,12 +14,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -34,6 +36,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -61,10 +64,13 @@ import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.rememberAsyncImagePainter
+import com.example.tiramisuonlineshop.model.FileUtils
+import com.example.tiramisuonlineshop.model.Suggestion
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
+
 
 @SuppressLint("UseKtx")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -255,6 +261,61 @@ fun UserProfileScreen(navController: NavHostController) {
                     }
                 }
             }
+
+            // --- Suggestions Section ---
+            var enableSuggestions by remember { mutableStateOf(false) }
+            var suggestionText by remember { mutableStateOf("") }
+            var savedSuggestion by remember { mutableStateOf<String?>(null) }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = enableSuggestions,
+                    onClick = { enableSuggestions = !enableSuggestions }
+                )
+                Text("Write a Suggestion")
+            }
+
+            if (enableSuggestions) {
+                OutlinedTextField(
+                    value = suggestionText,
+                    onValueChange = { suggestionText = it },
+                    label = { Text("Your Suggestion") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Row {
+                    Button(onClick = {
+                        if (suggestionText.isNotBlank()) {
+                            FileUtils.saveSuggestion(context, Suggestion(suggestionText))
+                            coroutineScope.launch {
+                                snackbarHostState.showSnackbar("Suggestion saved locally!")
+                            }
+                            suggestionText = "" // clear after saving
+                        }
+                    }) {
+                        Text("Send")
+                    }
+
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    Button(onClick = {
+                        val suggestion = FileUtils.readSuggestion(context)
+                        savedSuggestion = suggestion?.text
+                    }) {
+                        Text("Read")
+                    }
+                }
+
+                savedSuggestion?.let {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Saved Suggestion: $it")
+                }
+            }
+
 
             Spacer(modifier = Modifier.height(36.dp))
 
