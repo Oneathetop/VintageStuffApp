@@ -5,8 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.tiramisuonlineshop.ui.theme.screens.CartScreen
+import com.example.tiramisuonlineshop.model.ConnectivityHandler
 import com.example.tiramisuonlineshop.ui.theme.animation.BrightenAnimationScreen
+import com.example.tiramisuonlineshop.ui.theme.screens.CartScreen
+import com.example.tiramisuonlineshop.ui.theme.screens.FallbackScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.GoogleMapScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.HomeScreen
 import com.example.tiramisuonlineshop.ui.theme.screens.LoginScreen
@@ -30,7 +32,10 @@ fun AppNavGraph(navController: NavHostController) {
                 }
             }
         }
-        composable("home") { HomeScreen(navController) }
+        composable("home") {
+            ConnectivityHandler(navController = navController) {
+                HomeScreen(navController = navController)
+            }}
         composable("details/{productId}") { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId") ?: ""
             ProductDetailsScreen(productId = productId, navController = navController)
@@ -40,6 +45,10 @@ fun AppNavGraph(navController: NavHostController) {
         composable("profile") { UserProfileScreen(navController) }
         composable("splash") { SplashScreen(navController)}
         composable("map") { GoogleMapScreen(navController) }
+        composable("fallback") {
+            FallbackScreen(navController = navController)
+        }
+
     }
         }
 
