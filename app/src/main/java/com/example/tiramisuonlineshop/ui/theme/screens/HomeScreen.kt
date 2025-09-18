@@ -131,7 +131,7 @@ fun HomeScreen(navController: NavHostController) {
         bottomBar = {
             BottomNavigationBar(navController, currentRoute)
         },
-        floatingActionButton = {   // ✅ Floating Call Button
+        floatingActionButton = {   //  Floating Call Button
             FloatingActionButton(
                 onClick = {
                     val intent = Intent(Intent.ACTION_DIAL).apply {
