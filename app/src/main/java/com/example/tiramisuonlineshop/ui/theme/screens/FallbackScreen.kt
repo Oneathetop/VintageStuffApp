@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.tiramisuonlineshop.model.ConnectivityObserver
+import com.example.tiramisuonlineshop.model.Datasource
 import com.example.tiramisuonlineshop.model.NetworkStatus
 import kotlinx.coroutines.flow.collectLatest
 
@@ -27,6 +28,7 @@ fun FallbackScreen(navController: NavHostController) {
     val context = LocalContext.current
     val connectivityObserver = remember { ConnectivityObserver(context) }
     var isConnected by remember { mutableStateOf(false) }
+    val sampleProducts = remember { Datasource().loadProducts(context) }
 
     // 🔄 Auto-redirect when internet comes back
     LaunchedEffect(Unit) {
