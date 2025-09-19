@@ -100,7 +100,9 @@ fun UserProfileScreen(navController: NavHostController) {
     val currentRoute = navBackStackEntry?.destination?.route
     var firestoreName by remember { mutableStateOf("Loading...") }
     val context = LocalContext.current
-    var fetchedComment by remember { mutableStateOf<Comment?>(null) }
+
+
+    var fetchedComment by remember{ mutableStateOf<Comment?>(null) }
 
 
     // Launcher to capture camera image
@@ -197,7 +199,7 @@ fun UserProfileScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // 📸 Upload Button
+            // Upload Button
             Button(onClick = {
                 permissionLauncher.launch(Manifest.permission.CAMERA)
             }) {
@@ -297,7 +299,7 @@ fun UserProfileScreen(navController: NavHostController) {
                 Text(text = comment.body, textAlign = TextAlign.Center)
             }
 
-            // --- Suggestions Section ---
+
             var enableSuggestions by remember { mutableStateOf(false) }
             var suggestionText by remember { mutableStateOf("") }
             var savedSuggestion by remember { mutableStateOf<String?>(null) }
