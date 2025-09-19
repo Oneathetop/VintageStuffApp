@@ -59,17 +59,22 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.rememberAsyncImagePainter
+import com.example.tiramisuonlineshop.model.Comment
+import com.example.tiramisuonlineshop.model.CommentRepo
 import com.example.tiramisuonlineshop.model.FileUtils
 import com.example.tiramisuonlineshop.model.Suggestion
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 @SuppressLint("UseKtx")
@@ -95,6 +100,8 @@ fun UserProfileScreen(navController: NavHostController) {
     val currentRoute = navBackStackEntry?.destination?.route
     var firestoreName by remember { mutableStateOf("Loading...") }
     val context = LocalContext.current
+    var fetchedComment by remember { mutableStateOf<Comment?>(null) }
+
 
     // Launcher to capture camera image
     //
@@ -244,6 +251,8 @@ fun UserProfileScreen(navController: NavHostController) {
                 Text("Save Profile")
             }
 
+            Spacer(modifier = Modifier.height(16.dp))
+
             AnimatedVisibility(visible = showConfirmationCard) {
                 Card(
                     modifier = Modifier
@@ -260,6 +269,32 @@ fun UserProfileScreen(navController: NavHostController) {
                         Text("🏠 Address: $address")
                     }
                 }
+
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+
+            Button(
+                onClick = {
+                    coroutineScope.launch(Dispatchers.IO) {
+                        val comment = CommentRepo.CommentRepository.fetchRandomComment()
+                        withContext(Dispatchers.Main) {
+                            fetchedComment = comment
+                        }
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Load Random Comment")
+            }
+
+            fetchedComment?.let { comment ->
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = "From: ${comment.email}",
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(text = comment.body, textAlign = TextAlign.Center)
             }
 
             // --- Suggestions Section ---
@@ -269,7 +304,9 @@ fun UserProfileScreen(navController: NavHostController) {
 
             Row(
                 verticalAlignment = Alignment.CenterVertically
-            ) {
+            )
+
+            {
                 RadioButton(
                     selected = enableSuggestions,
                     onClick = { enableSuggestions = !enableSuggestions }

@@ -107,6 +107,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("com.google.accompanist:accompanist-permissions:0.30.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+
 }
 
 apply(plugin = "com.google.gms.google-services")
