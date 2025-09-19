@@ -102,7 +102,7 @@ fun UserProfileScreen(navController: NavHostController) {
     val context = LocalContext.current
 
 
-    var fetchedComment by remember{ mutableStateOf<Comment?>(null) }
+    var fetchedComment by rememberSaveable { mutableStateOf<Comment?>(null) }
 
 
     // Launcher to capture camera image
@@ -300,8 +300,8 @@ fun UserProfileScreen(navController: NavHostController) {
             }
 
 
-            var enableSuggestions by remember { mutableStateOf(false) }
-            var suggestionText by remember { mutableStateOf("") }
+            var enableSuggestions by rememberSaveable { mutableStateOf(false) }
+            var suggestionText by rememberSaveable { mutableStateOf("") }
             var savedSuggestion by remember { mutableStateOf<String?>(null) }
 
             Row(
