@@ -19,8 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.tiramisuonlineshop.model.ConnectivityObserver
-import com.example.tiramisuonlineshop.model.Datasource
+import com.example.tiramisuonlineshop.model.DataModel
 import com.example.tiramisuonlineshop.model.NetworkStatus
+import com.example.tiramisuonlineshop.model.OfflineDataSource
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -28,9 +29,13 @@ fun FallbackScreen(navController: NavHostController) {
     val context = LocalContext.current
     val connectivityObserver = remember { ConnectivityObserver(context) }
     var isConnected by remember { mutableStateOf(false) }
-    val sampleProducts = remember { Datasource().loadProducts(context) }
+    var aboutUs by remember { mutableStateOf<DataModel?>(null) }
 
-    // 🔄 Auto-redirect when internet comes back
+    LaunchedEffect(Unit) {
+        aboutUs = OfflineDataSource.JsonUtils.loadAboutUs(context)
+    }
+
+    //Auto-redirect when internet comes back
     LaunchedEffect(Unit) {
         connectivityObserver.observe().collectLatest { status ->
             isConnected = status == NetworkStatus.Available
@@ -51,7 +56,18 @@ fun FallbackScreen(navController: NavHostController) {
                 text = "No internet connection.\nPlease check your connection.",
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.height(16.dp))
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            aboutUs?.aboutUs?.let { info ->
+                Text(text = info.title, textAlign = TextAlign.Center, style = androidx.compose.material3.MaterialTheme.typography.titleMedium)
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = info.description, textAlign = TextAlign.Center)
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Mission: ${info.mission}", textAlign = TextAlign.Center)
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Contact us at: ${info.contact.email}")
+            }
 
         }
     }

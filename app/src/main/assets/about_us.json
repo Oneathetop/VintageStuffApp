@@ -1,0 +1,17 @@
+{
+  "aboutUs": {
+    "title": "About Us",
+    "description": "Welcome to VintageStuff — your trusted online store for timeless treasures. We specialize in carefully curated vintage collectibles, sports memorabilia, classic devices, and unique items that bring history back to life. Our mission is to connect passionate collectors and everyday shoppers with authentic vintage pieces that carry stories worth sharing.",
+    "mission": "To preserve the charm of the past by offering authentic vintage items that spark nostalgia, add character, and create lasting value for our customers.",
+    "values": [
+      "Authenticity: Every item is verified to maintain its true vintage essence.",
+      "Sustainability: Giving pre-loved items a second life.",
+      "Community: Building connections between collectors and vintage lovers."
+    ],
+    "contact": {
+      "email": "support@vintagestuff.com",
+      "phone": "0771234567",
+      "address": "No, 24, Colombo 07"
+    }
+  }
+}
