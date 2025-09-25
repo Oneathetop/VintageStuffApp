@@ -5,9 +5,16 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Comment(
-        val postId: Int,
         val id: Int,
-        val name: String,
-        val email: String,
-        val body: String
+        val body: String,
+        val user: User
     ) : Parcelable
+
+@Parcelize
+data class User(
+        val username: String
+) : Parcelable
+
+data class CommentResponse(
+        val comments: List<Comment>
+)

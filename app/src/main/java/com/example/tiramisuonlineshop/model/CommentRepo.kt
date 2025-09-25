@@ -1,7 +1,6 @@
 package com.example.tiramisuonlineshop.model
 
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
@@ -12,16 +11,16 @@ class CommentRepo {
 
          fun fetchRandomComment(): Comment? {
             val request = Request.Builder()
-                .url("https://jsonplaceholder.typicode.com/comments")
+                .url("https://dummyjson.com/comments")
                 .build()
 
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) return null
 
-                val type = object : TypeToken<List<Comment>>() {}.type
-                val comments: List<Comment> = gson.fromJson(response.body?.string(), type)
+                val jsonString = response.body?.string()
+                val commentResponse = gson.fromJson(jsonString, CommentResponse::class.java)
 
-                return comments.random() // pick one random comment
+                return commentResponse.comments.random() // pick one random comment
             }
         }
     }

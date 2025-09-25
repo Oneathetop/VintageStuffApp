@@ -286,13 +286,13 @@ fun UserProfileScreen(navController: NavHostController) {
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Load Random Comment")
+                Text("Load Reviews")
             }
 
             fetchedComment?.let { comment ->
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "From: ${comment.email}",
+                    text = "From: ${comment.user.username}",
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(4.dp))
