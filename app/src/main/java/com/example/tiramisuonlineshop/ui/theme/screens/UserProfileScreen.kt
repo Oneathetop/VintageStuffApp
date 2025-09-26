@@ -2,6 +2,7 @@ package com.example.tiramisuonlineshop.ui.theme.screens
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.util.Log
@@ -12,8 +13,10 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +25,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -44,6 +49,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,6 +70,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.example.tiramisuonlineshop.model.Comment
 import com.example.tiramisuonlineshop.model.CommentRepo
@@ -75,6 +82,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.net.URL
 
 
 @SuppressLint("UseKtx")
@@ -143,7 +152,32 @@ fun UserProfileScreen(navController: NavHostController) {
                 firestoreName = "Error loading name"
             }
     }
+    //
+    // ---------------- Partnered Store Banners ----------------
+    var bannerImages by remember { mutableStateOf<List<String>>(emptyList()) }
 
+    LaunchedEffect(Unit) {
+        try {
+            val response = withContext(Dispatchers.IO) {
+                URL("https://dummyjson.com/products/category/mens-watches?limit=10").readText()
+            }
+            val json = JSONObject(response)
+            val products = json.getJSONArray("products")
+            val urls = mutableListOf<String>()
+            for (i in 0 until products.length()) {
+                val obj = products.getJSONObject(i)
+                // Get first image of each product
+                val imageUrl = obj.getJSONArray("images").getString(0)
+                urls.add(imageUrl)
+            }
+            bannerImages = urls
+        } catch (e: Exception) {
+            Log.e("API", "Failed to fetch banners", e)
+        }
+    }
+// ---------------------------------------------------------
+
+    //
 
     Scaffold(
         topBar = {
@@ -353,6 +387,48 @@ fun UserProfileScreen(navController: NavHostController) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text("Saved Suggestion: $it")
                 }
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            if (bannerImages.isNotEmpty()) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        "Partnered Store Offers",
+                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        contentPadding = PaddingValues(horizontal = 16.dp)
+                    ) {
+                        items(bannerImages) { url ->
+                            Card(
+                                modifier = Modifier
+                                    .width(220.dp)
+                                    .height(140.dp)
+                                    .clickable {
+                                        val intent = Intent(
+                                            Intent.ACTION_VIEW,
+                                            Uri.parse("https://www.europeanwatch.com/collection/vintage")
+                                        )
+                                        context.startActivity(intent)
+
+                                    },
+                                elevation = CardDefaults.cardElevation(6.dp)
+                            ) {
+                                AsyncImage(
+                                    model = url,
+                                    contentDescription = "Partner Offer",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
+                        }
+                    }
+                }
+            } else {
+                Text("No offers available right now", modifier = Modifier.padding(16.dp))
             }
 
 
