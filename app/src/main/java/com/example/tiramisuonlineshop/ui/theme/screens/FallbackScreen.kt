@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -52,23 +53,15 @@ fun FallbackScreen(navController: NavHostController) {
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = "No internet connection.\nPlease check your connection.",
-                textAlign = TextAlign.Center
-            )
 
             Spacer(modifier = Modifier.height(32.dp))
 
             aboutUs?.aboutUs?.let { info ->
-                Text(text = info.title, textAlign = TextAlign.Center, style = androidx.compose.material3.MaterialTheme.typography.titleMedium)
+                Text(text = info.title, textAlign = TextAlign.Center, style = androidx.compose.material3.MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(text = info.description, textAlign = TextAlign.Center)
+                Text(text = info.description, textAlign = TextAlign.Center, style = androidx.compose.material3.MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "Mission: ${info.mission}", textAlign = TextAlign.Center)
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "Contact us at: ${info.contact.email}")
             }
-
         }
     }
 }

@@ -9,7 +9,6 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -288,26 +287,6 @@ fun UserProfileScreen(navController: NavHostController) {
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
-            AnimatedVisibility(visible = showConfirmationCard) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp)
-                        .clickable { showConfirmationCard = false },
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Saved Profile", style = MaterialTheme.typography.titleMedium)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text("👤 Name: $fullName")
-                        Text("📞 Phone: $phoneNumber")
-                        Text("🏠 Address: $address")
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
-            }
 
             Button(
                 onClick = {
