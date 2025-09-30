@@ -76,6 +76,7 @@ import com.example.tiramisuonlineshop.model.CommentRepo
 import com.example.tiramisuonlineshop.model.FileUtils
 import com.example.tiramisuonlineshop.model.Suggestion
 import com.example.tiramisuonlineshop.ui.theme.BottomNavigationBar
+import com.example.tiramisuonlineshop.ui.theme.Firestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
@@ -144,7 +145,7 @@ fun UserProfileScreen(navController: NavHostController) {
     user?.let {
         db.collection("users").document(it.uid).get()
             .addOnSuccessListener { document ->
-                firestoreName = document?.getString("Full Name") ?: "No name found"
+                firestoreName = document?.getString("fullName") ?: "No name found"
             }
             .addOnFailureListener { e ->
                 Log.e("Firestore", "Error fetching user data", e)
@@ -269,15 +270,32 @@ fun UserProfileScreen(navController: NavHostController) {
             )
 
             Spacer(modifier = Modifier.height(fieldSpacing))
-
+            //
             Button(
                 onClick = {
                     if (fullName.isBlank() || phoneNumber.isBlank() || address.isBlank()) {
                         showError = true
                     } else {
-                        showConfirmationCard = true
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar("Profile info saved!")
+                        val currentUser = FirebaseAuth.getInstance().currentUser
+                        currentUser?.let { user ->
+                            Firestore.saveUserProfile(
+                                uid = user.uid,
+                                fullName = fullName,
+                                phone = phoneNumber,
+                                address = address,
+                                onSuccess = {
+                                    showConfirmationCard = true
+                                    coroutineScope.launch {
+                                        snackbarHostState.showSnackbar("Profile info saved!")
+                                    }
+                                },
+                                onError = { e ->
+                                    Log.e("Firestore", "Error saving user info", e)
+                                    coroutineScope.launch {
+                                        snackbarHostState.showSnackbar("Error saving profile")
+                                    }
+                                }
+                            )
                         }
                     }
                 },
@@ -286,6 +304,7 @@ fun UserProfileScreen(navController: NavHostController) {
                 Text("Save Profile")
             }
 
+            //
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
