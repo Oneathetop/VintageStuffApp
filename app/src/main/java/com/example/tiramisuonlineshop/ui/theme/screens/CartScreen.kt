@@ -59,9 +59,7 @@ fun CartScreen(navController: NavHostController) {
             } else {
 
                 //
-                BoxWithConstraints(
-                    modifier = Modifier.weight(1f)
-                ) {
+                BoxWithConstraints {
                     val isWide = maxWidth > 600.dp
                     val columns = if (isWide) 2 else 1
                     val totalPrice = CartManager.cartItems.sumOf { it.product.price * it.quantity }
@@ -113,22 +111,25 @@ fun CartScreen(navController: NavHostController) {
                                     .padding(top = 16.dp, start = 8.dp, end = 8.dp)
                             )
                         }
+                        //
+                        if (CartManager.cartUsed.value) {
+                            item(span = { GridItemSpan(columns) }) {
+                                Button(
+                                    onClick = { CartManager.clearCart() },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 16.dp, start = 8.dp, end = 8.dp)
+                                ) {
+                                    Text("Clear Cart")
+                                }
+                            }
+                        }
+                        //
                     }
                 }
 
-                //
-                }
-
-                if (CartManager.cartUsed.value) {
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Button(
-                    onClick = { CartManager.clearCart() },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Clear Cart")
-                }
-            }
         }
     }
+    }
 }
+
